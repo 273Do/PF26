@@ -29,7 +29,10 @@ jobs:
       - name: Generate OpenAPI schema
         env:
           STRAPI_URL: ${{ secrets.STRAPI_URL }}
-        run: pnpm types:generate
+        run: pnpm exec openapi-typescript ${STRAPI_URL}/api/documentation.json -o types/schema.ts
+
+      - name: Format schema
+        run: pnpm exec eslint --fix types/schema.ts
 
       - name: Upload schema artifacts
         uses: actions/upload-artifact@v4
