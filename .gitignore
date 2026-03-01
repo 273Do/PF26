@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 # pnpm store
 .pnpm-store
+
+# openapiで自動生成されるため不要自動生成される
+types
