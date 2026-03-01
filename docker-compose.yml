@@ -3,6 +3,7 @@ services:
     build: .
     volumes:
       - .:/app
+      - node_modules:/app/node_modules
       - ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro
       - ~/.gitconfig:/root/.gitconfig:ro
     ports:
@@ -10,4 +11,7 @@ services:
     working_dir: /app
     stdin_open: true
     tty: true
-    command: pnpm dev --host
+    command: sh -c "pnpm i && pnpm dev --host"
+
+volumes:
+  node_modules:
