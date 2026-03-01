@@ -3,6 +3,8 @@ services:
     build: .
     volumes:
       - .:/app
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa:ro
+      - ~/.gitconfig:/root/.gitconfig:ro
     ports:
       - "4321:4321"
     working_dir: /app
