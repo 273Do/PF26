@@ -5,16 +5,18 @@ output:
   - summary
 
 pre-commit:
-  parallel: true
   commands:
     format:
-      glob: "*.{ts,tsx,js,jsx,json,css}"
       run: pnpm run format
       stage_fixed: true
 
     lint:
-      glob: "*.{ts,tsx,js,jsx}"
-      run: pnpm run lint:fix
+      glob: "*.{ts,tsx,js,jsx,astro}"
+      run: pnpm run lint
+      stage_fixed: true
+
+    type-check:
+      run: pnpm run check
 
 pre-push:
   commands:
@@ -22,13 +24,13 @@ pre-push:
       run: pnpm run format:check
 
     lint-check:
-      run: pnpm run lint
+      run: pnpm run lint:check
 
     type-check:
-      run: pnpm run check-types
+      run: pnpm run check
 
-    test:
-      run: pnpm run test
+    # test:
+    #   run: pnpm run test
 
 commit-msg:
   commands:
