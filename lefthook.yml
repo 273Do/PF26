@@ -8,12 +8,12 @@ pre-commit:
   commands:
     format:
       run: pnpm run format
-      stage_fixed: true
+      # stage_fixed: true
 
     lint:
       glob: "*.{ts,tsx,js,jsx,astro}"
       run: pnpm run lint
-      stage_fixed: true
+      # stage_fixed: true
 
     type-check:
       run: pnpm run check
