@@ -1,6 +1,5 @@
 ---
-import Copyright from "./Copyright.astro";
-import { SNS_LINKS } from "../../consts";
+import { COPYRIGHT_THIS_YEAR, SNS_LINKS } from "../../consts";
 
 import { cn } from "@/lib/utils";
 ---
@@ -40,7 +39,9 @@ import { cn } from "@/lib/utils";
       ))
     }
   </ul>
-  <Copyright />
+  <p class="font-mono text-sm text-muted-foreground">
+    ©2023-{COPYRIGHT_THIS_YEAR} 273DoWorks
+  </p>
   <!-- <Blinking delay={0.1}>
     <Copyright />
   </Blinking> -->
