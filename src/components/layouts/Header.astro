@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+
+import { ThemeToggle } from "../ThemeToggle";
+---
+
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+  const isDark = getThemePreference() === "dark";
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+</script>
+
+<header
+  class={`fixed z-100 flex h-9 w-full items-center justify-between px-3 sm:px-6 dark:sm:mix-blend-difference`}
+>
+  <a href="/">
+    <Image
+      class="dark:invert"
+      src={"/svg/logo.svg"}
+      alt="273* Logo"
+      width={45}
+      height={45}
+      priority
+    />
+  </a>
+  <ThemeToggle client:load />
+</header>

@@ -1,0 +1,21 @@
+---
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+
+import BaseHead from "@/components/BaseHead.astro";
+import Footer from "@/components/layouts/Footer.astro";
+import Header from "@/components/layouts/Header.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body
+    class={`font-sans antialiased selection:bg-secondary-foreground selection:text-primary-foreground`}
+  >
+    <Header />
+    <div class="px-3 sm:px-6"><slot /></div>
+    <Footer />
+  </body>
+</html>

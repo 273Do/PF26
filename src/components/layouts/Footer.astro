@@ -1,0 +1,47 @@
+---
+import Copyright from "./Copyright.astro";
+import { SNS_LINKS } from "../../consts";
+
+import { cn } from "@/lib/utils";
+---
+
+<footer
+  class={cn(
+    // isFixed ? "fixed bottom-0" : "absolute",
+    `
+      z-0 flex h-9 w-full items-center justify-end px-3 font-mono text-sm
+      sm:z-100 sm:justify-between sm:px-6
+      dark:mix-blend-difference
+    `,
+  )}
+>
+  <ul class="hidden gap-6 sm:flex">
+    {
+      SNS_LINKS.map(({ href, title }) => (
+        // SNS_LINKS.map(({ href, title }, i) => (
+        // <Blinking key={href} delay={0.1 * i}>
+        //   <Link
+        //     class="cursor-alias hover:underline"
+        //     href={href}
+        //     target="_blank"
+        //     rel="noopener noreferrer"
+        //   >
+        //     {title}
+        //   </Link>
+        // </Blinking>
+        <a
+          href={href}
+          class="cursor-alias hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <p>{title}</p>
+        </a>
+      ))
+    }
+  </ul>
+  <Copyright />
+  <!-- <Blinking delay={0.1}>
+    <Copyright />
+  </Blinking> -->
+</footer>
