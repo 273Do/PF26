@@ -1,7 +1,10 @@
 ---
 import { Image } from "astro:assets";
+import { Languages } from "lucide-react";
 
 import { ThemeToggle } from "../ThemeToggle";
+import PageNavigation from "./PageNavigation.astro";
+import { Button } from "../ui/button";
 ---
 
 <script is:inline>
@@ -41,5 +44,11 @@ import { ThemeToggle } from "../ThemeToggle";
       priority
     />
   </a>
-  <ThemeToggle client:load />
+  <PageNavigation />
+  <div class="hidden sm:flex">
+    <Button variant="ghost" size="icon-sm" className="cursor-pointer">
+      <Languages className="size-4" />
+    </Button>
+    <ThemeToggle client:load />
+  </div>
 </header>

@@ -4,6 +4,16 @@
 export const SITE_TITLE = "Astro Blog";
 export const SITE_DESCRIPTION = "Welcome to my website!";
 
+// ページリンクとタイトル
+export const PAGE_LINKS = [
+  { title: "Home", href: "/" },
+  { title: "About", href: "/about" },
+  { title: "Works", href: "/works" },
+  { title: "Showcase", href: "/showcase" },
+  { title: "Contact", href: "/contact" },
+] as const;
+
+// snsリンクとタイトル
 const GITHUB_LINK = import.meta.env.PUBLIC_GITHUB_LINK;
 const DISCORD_LINK = import.meta.env.PUBLIC_DISCORD_LINK;
 const YOUTUBE_LINK = import.meta.env.PUBLIC_YOUTUBE_LINK;
