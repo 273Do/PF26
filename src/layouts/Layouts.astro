@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from "astro:transitions";
+
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
 import BaseHead from "@/components/BaseHead.astro";
@@ -6,9 +8,23 @@ import Footer from "@/components/layouts/Footer.astro";
 import Header from "@/components/layouts/Header.astro";
 ---
 
+<script is:inline>
+  const applyTheme = () => {
+    const theme =
+      localStorage.getItem("theme") ??
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light");
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  };
+  applyTheme();
+  document.addEventListener("astro:after-swap", applyTheme);
+</script>
+
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <ViewTransitions />
   </head>
   <body
     class="font-sans antialiased selection:bg-secondary-foreground selection:text-primary-foreground"
