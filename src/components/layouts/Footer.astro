@@ -1,5 +1,6 @@
 ---
-import { COPYRIGHT_THIS_YEAR, SNS_LINKS } from "../../consts";
+import Copyright from "./Copyright";
+import { SNS_LINKS } from "../../consts";
 
 import { cn } from "@/lib/utils";
 
@@ -21,17 +22,6 @@ const isFixed = pathname === "showcase" || pathname === "contact";
   <ul class="hidden gap-6 sm:flex">
     {
       SNS_LINKS.map(({ href, title }) => (
-        // SNS_LINKS.map(({ href, title }, i) => (
-        // <Blinking key={href} delay={0.1 * i}>
-        //   <Link
-        //     class="cursor-alias hover:underline"
-        //     href={href}
-        //     target="_blank"
-        //     rel="noopener noreferrer"
-        //   >
-        //     {title}
-        //   </Link>
-        // </Blinking>
         <a
           href={href}
           class="cursor-alias hover:underline"
@@ -43,9 +33,7 @@ const isFixed = pathname === "showcase" || pathname === "contact";
       ))
     }
   </ul>
-  <p class="font-mono text-sm text-muted-foreground">
-    ©2023-{COPYRIGHT_THIS_YEAR} 273DoWorks
-  </p>
+  <Copyright />
   <!-- <Blinking delay={0.1}>
     <Copyright />
   </Blinking> -->
