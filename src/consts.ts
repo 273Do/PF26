@@ -14,13 +14,13 @@ export const PAGE_LINKS = [
 ] as const;
 
 // snsリンクとタイトル
-const GITHUB_LINK = import.meta.env.NEXT_PUBLIC_GITHUB_LINK;
-const DISCORD_LINK = import.meta.env.NEXT_PUBLIC_DISCORD_LINK;
-const YOUTUBE_LINK = import.meta.env.NEXT_PUBLIC_YOUTUBE_LINK;
-const X_LINK = import.meta.env.NEXT_PUBLIC_X_LINK;
-const QIITA_LINK = import.meta.env.NEXT_PUBLIC_QIITA_LINK;
-const NOTE_LINK = import.meta.env.NEXT_PUBLIC_NOTE_LINK;
-const KOFI_LINK = import.meta.env.NEXT_PUBLIC_KOFI_LINK;
+const GITHUB_LINK = import.meta.env.PUBLIC_GITHUB_LINK;
+const DISCORD_LINK = import.meta.env.PUBLIC_DISCORD_LINK;
+const YOUTUBE_LINK = import.meta.env.PUBLIC_YOUTUBE_LINK;
+const X_LINK = import.meta.env.PUBLIC_X_LINK;
+const QIITA_LINK = import.meta.env.PUBLIC_QIITA_LINK;
+const NOTE_LINK = import.meta.env.PUBLIC_NOTE_LINK;
+const KOFI_LINK = import.meta.env.PUBLIC_KOFI_LINK;
 
 export const SNS_LINKS = [
   { title: "GitHub", href: GITHUB_LINK || "" },
