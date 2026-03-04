@@ -1,4 +1,5 @@
 ---
+import Blinking from "@/components/animations/Blinking.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
 import {
   CONTACT_SNS_LINKS,
@@ -36,14 +37,14 @@ const CONTACT_LINKS: LinkObj[] = [
         >
           Contact
         </p>
-        <div class="ml-2">
+        <Blinking class="ml-2">
           <a
             class="cursor-alias text-xl font-semibold hover:underline md:text-3xl lg:text-4xl"
             href={`mailto:${MAIL_ADDRESS}`}
           >
             {MAIL_ADDRESS}
           </a>
-        </div>
+        </Blinking>
         <div class="ml-2">
           <ul class="inline-flex flex-col">
             {

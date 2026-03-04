@@ -53,7 +53,6 @@ export const MobilePageNavigation = ({ currentPath }: Props) => {
             PAGE_LINKS.filter((link) => link.href !== "").map(
               ({ href, title }) => {
                 const count = counts[href];
-
                 const isActive = currentPath === href;
 
                 return (

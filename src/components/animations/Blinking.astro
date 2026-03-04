@@ -1,0 +1,60 @@
+---
+type Props = {
+  /**
+   * アニメーション開始の遅延時間（秒）
+   */
+  delay?: number;
+  /**
+   * class
+   */
+  class?: string;
+  once?: boolean;
+};
+
+const { delay = 0, class: className, once } = Astro.props;
+---
+
+<div class={className} data-blinking data-delay={delay} data-once={once}>
+  <slot />
+</div>
+
+<script>
+  import { gsap } from "gsap";
+
+  let isPageTransition = false;
+  document.addEventListener("astro:before-swap", () => {
+    isPageTransition = true;
+  });
+
+  const initBlinking = () => {
+    document.querySelectorAll<HTMLElement>("[data-blinking]").forEach((el) => {
+      const once = el.dataset.once === "true";
+      if (once && isPageTransition) {
+        gsap.set(el, { opacity: 1 });
+        return;
+      }
+
+      const delay = parseFloat(el.dataset.delay ?? "0");
+
+      gsap.fromTo(
+        el,
+        { opacity: 0 },
+        {
+          opacity: 1,
+          duration: 0.05,
+          delay,
+          repeat: 6,
+          yoyo: true,
+          ease: "none",
+          onComplete: () => {
+            gsap.set(el, { opacity: 1 });
+          },
+        },
+      );
+    });
+
+    isPageTransition = false;
+  };
+
+  document.addEventListener("astro:page-load", initBlinking);
+</script>

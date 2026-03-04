@@ -1,6 +1,7 @@
 ---
 import Copyright from "./Copyright";
 import { SNS_LINKS } from "../../consts";
+import Blinking from "../animations/Blinking.astro";
 
 import { cn } from "@/lib/utils";
 
@@ -21,20 +22,21 @@ const isFixed = pathname === "showcase" || pathname === "contact";
 >
   <ul class="hidden gap-6 sm:flex">
     {
-      SNS_LINKS.map(({ href, title }) => (
-        <a
-          href={href}
-          class="cursor-alias hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <p>{title}</p>
-        </a>
+      SNS_LINKS.map(({ href, title }, i) => (
+        <Blinking delay={0.1 * i} once>
+          <a
+            href={href}
+            class="cursor-alias hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <p>{title}</p>
+          </a>
+        </Blinking>
       ))
     }
   </ul>
-  <Copyright />
-  <!-- <Blinking delay={0.1}>
+  <Blinking delay={0.1} once>
     <Copyright />
-  </Blinking> -->
+  </Blinking>
 </footer>
