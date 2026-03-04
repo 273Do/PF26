@@ -17,7 +17,7 @@ const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
     <ul class="hidden gap-6 font-mono text-sm text-muted-foreground sm:flex">
       {PAGE_LINKS.filter((link) => link.href !== "/").map(({ href, title }) => {
         const count = counts[href];
-        const isActive = pathname.startsWith(href.slice(1));
+        const isActive = pathname === href.slice(1);
 
         return (
           <li class={isActive ? "text-foreground" : ""}>
