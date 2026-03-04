@@ -6,11 +6,11 @@ export const SITE_DESCRIPTION = "Welcome to my website!";
 
 // ページリンクとタイトル
 export const PAGE_LINKS = [
-  { title: "Home", href: "/" },
-  { title: "About", href: "/about" },
-  { title: "Works", href: "/works" },
-  { title: "Showcase", href: "/showcase" },
-  { title: "Contact", href: "/contact" },
+  { title: "Home", href: "" },
+  { title: "About", href: "about" },
+  { title: "Works", href: "works" },
+  { title: "Showcase", href: "showcase" },
+  { title: "Contact", href: "contact" },
 ] as const;
 
 // snsリンクとタイトル

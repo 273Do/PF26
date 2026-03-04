@@ -1,5 +1,6 @@
 ---
 import { PAGE_LINKS } from "@/consts";
+import { cn } from "@/lib/utils";
 
 const worksCount = 10;
 const showcaseCount = 5;
@@ -9,18 +10,25 @@ const counts: Record<string, number> = {
   "/showcase": showcaseCount,
 };
 
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+type Props = {
+  /**
+   * 現在のパス
+   */
+  currentPath: string;
+};
+
+const { currentPath } = Astro.props;
 ---
 
 {
-  pathname !== "" && (
+  currentPath !== "" && (
     <ul class="hidden gap-6 font-mono text-sm text-muted-foreground sm:flex">
-      {PAGE_LINKS.filter((link) => link.href !== "/").map(({ href, title }) => {
+      {PAGE_LINKS.filter((link) => link.href !== "").map(({ href, title }) => {
         const count = counts[href];
-        const isActive = pathname === href.slice(1);
+        const isActive = currentPath === href;
 
         return (
-          <li class={isActive ? "text-foreground" : ""}>
+          <li class={cn(isActive && "text-foreground")}>
             <a href={href} class="flex">
               <p class="hover:underline">{title}</p>
               {count && <p class="text-[10px]">({count})</p>}

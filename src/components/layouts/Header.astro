@@ -3,8 +3,11 @@ import { Image } from "astro:assets";
 import { Languages } from "lucide-react";
 
 import { ThemeToggle } from "../ThemeToggle";
+import { MobilePageNavigation } from "./MobilePageNavigation";
 import PageNavigation from "./PageNavigation.astro";
 import { Button } from "../ui/button";
+
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
 ---
 
 <header
@@ -20,7 +23,8 @@ import { Button } from "../ui/button";
       priority
     />
   </a>
-  <PageNavigation />
+  <PageNavigation currentPath={pathname} />
+  <MobilePageNavigation currentPath={pathname} client:load />
   <div class="hidden sm:flex">
     <Button variant="ghost" size="icon-sm" className="cursor-pointer">
       <Languages className="size-4" />
