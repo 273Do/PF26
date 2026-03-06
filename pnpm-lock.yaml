@@ -71,6 +71,9 @@ importers:
       eslint-plugin-unused-imports:
         specifier: ^4.4.1
         version: 4.4.1(@typescript-eslint/eslint-plugin@8.56.1(@typescript-eslint/parser@8.56.1(eslint@10.0.2(jiti@2.6.1))(typescript@5.9.3))(eslint@10.0.2(jiti@2.6.1))(typescript@5.9.3))(eslint@10.0.2(jiti@2.6.1))
+      fitty:
+        specifier: ^2.4.2
+        version: 2.4.2
       gsap:
         specifier: ^3.14.2
         version: 3.14.2
@@ -3072,6 +3075,9 @@ packages:
   find-up@5.0.0:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
+
+  fitty@2.4.2:
+    resolution: {integrity: sha512-GNhWgImK4+wEkgEZjBkQMyu5NLSmmryg/CaRP7zYby+TWzCrUou6BHL+iqbjKzJRXMyzuJkH+LBB1+lh4oO77g==}
 
   flat-cache@4.0.1:
     resolution: {integrity: sha512-f7ccFPK3SXFHpx15UIGyRJ/FJQctuKZ0zVuN3frBo4HnK3cay9VEW0R6yPYFHC0AgqhukPzKjq22t5DmAyqGyw==}
@@ -8196,6 +8202,8 @@ snapshots:
     dependencies:
       locate-path: 6.0.0
       path-exists: 4.0.0
+
+  fitty@2.4.2: {}
 
   flat-cache@4.0.1:
     dependencies:
