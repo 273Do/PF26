@@ -173,3 +173,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* fitty */
+.fit {
+  display: inline-block;
+  white-space: nowrap;
+}
