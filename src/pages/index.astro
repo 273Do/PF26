@@ -1,4 +1,5 @@
 ---
+import TextReveal from "@/components/animations/TextReveal.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
 ---
 
@@ -10,11 +11,14 @@ import Layouts from "@/components/layouts/Layouts.astro";
     >
       <!-- <Suspense fallback={(<p>loading now</p>)}>
       <LogoThree />
-      </Suspense>
-      <TextReveal
-      text="PORTFOLIO"
-      className="translate-y-2 leading-none font-semibold md:translate-y-4 lg:translate-y-6"
-      /> -->
+      </Suspense> -->
+      <!-- <p>loading</p> -->
+      <div class="w-full">
+        <TextReveal
+          text="PORTFOLIO"
+          class="translate-y-2 leading-none font-semibold md:translate-y-4 lg:translate-y-5.5"
+        />
+      </div>
     </div>
   </Layouts>
 </html>
