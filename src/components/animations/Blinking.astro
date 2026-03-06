@@ -8,15 +8,14 @@ type Props = {
    * class
    */
   class?: string;
+  /**
+   * ページ遷移時にアニメーションを実行しない
+   */
   once?: boolean;
 };
 
 const { delay = 0, class: className, once } = Astro.props;
 ---
-
-<div class={className} data-blinking data-delay={delay} data-once={once}>
-  <slot />
-</div>
 
 <script>
   import { gsap } from "gsap";
@@ -58,3 +57,7 @@ const { delay = 0, class: className, once } = Astro.props;
 
   document.addEventListener("astro:page-load", initBlinking);
 </script>
+
+<div class={className} data-blinking data-delay={delay} data-once={once}>
+  <slot />
+</div>
