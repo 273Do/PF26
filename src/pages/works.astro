@@ -1,13 +1,21 @@
 ---
+import TextReveal from "@/components/animations/TextReveal.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
 ---
 
 <!doctype html>
 <html lang="en">
   <Layouts>
-    <div
-      class="flex h-[calc(100dvh-36px)] w-full items-end justify-center overflow-hidden"
-    >
+    <div class="block w-full items-start justify-end sm:flex">
+      <div class="block h-[3vh] sm:hidden"></div>
+      <div class="left-6 flex w-3/5 sm:fixed sm:block sm:w-2/5 md:space-y-3">
+        <TextReveal
+          text="Works"
+          class="leading-none font-semibold md:translate-y-4 lg:translate-y-6"
+        />
+        <!-- <WorksCount locale={locale} /> -->
+      </div>
+      <!-- <WorkList locale={locale} /> -->
     </div>
   </Layouts>
 </html>

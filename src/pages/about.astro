@@ -1,13 +1,21 @@
 ---
+import TextReveal from "@/components/animations/TextReveal.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
 ---
 
 <!doctype html>
 <html lang="en">
   <Layouts>
-    <div
-      class="flex h-[calc(100dvh-36px)] w-full items-end justify-center overflow-hidden"
-    >
+    <div class="block w-full justify-between sm:flex">
+      <div class="block h-[3vh] sm:hidden"></div>
+      <div class="right-6 block w-3/5 sm:fixed sm:w-2/5">
+        <TextReveal
+          text="About"
+          class={`leading-none font-semibold md:translate-y-4 lg:translate-y-6`}
+        />
+      </div>
+      <p>test</p>
+      <!-- <Profile locale={locale} /> -->
     </div>
   </Layouts>
 </html>

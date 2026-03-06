@@ -6,6 +6,10 @@ import BaseHead from "./BaseHead.astro";
 import Footer from "@/components/layouts/Footer.astro";
 import Header from "@/components/layouts/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
+
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+
+const hasHeaderOffset = pathname === "" || pathname === "contact";
 ---
 
 <script is:inline>
@@ -30,7 +34,20 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
     class="font-sans antialiased selection:bg-secondary-foreground selection:text-primary-foreground"
   >
     <Header />
-    <div class="px-3 sm:px-6"><slot /></div>
+    <div class="px-3 sm:px-6">
+      {
+        hasHeaderOffset ? (
+          <slot />
+        ) : (
+          <>
+            <div class="fixed h-9 w-full bg-background" />
+            <main class="pt-9">
+              <slot />
+            </main>
+          </>
+        )
+      }
+    </div>
     <Footer />
   </body>
 </html>
