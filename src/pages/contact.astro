@@ -1,6 +1,7 @@
 ---
 import Blinking from "@/components/animations/Blinking.astro";
 import TextReveal from "@/components/animations/TextReveal.astro";
+import TextScramble from "@/components/animations/TextScramble.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
 import {
   CONTACT_SNS_LINKS,
@@ -47,7 +48,7 @@ const CONTACT_LINKS: LinkObj[] = [
             {MAIL_ADDRESS}
           </a>
         </Blinking>
-        <div class="ml-2">
+        <Blinking class="ml-2" delay={0.2}>
           <ul class="inline-flex flex-col">
             {
               CONTACT_LINKS.map(({ href, title }, i) => (
@@ -58,15 +59,17 @@ const CONTACT_LINKS: LinkObj[] = [
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <p class={i === CONTACT_LINKS.length - 1 ? "mt-2" : ""}>
-                      {title}
-                    </p>
+                    <TextScramble
+                      text={title}
+                      delay={0.015 * CONTACT_LINKS.length * i}
+                      class={i === CONTACT_LINKS.length - 1 ? "mt-2" : ""}
+                    />
                   </a>
                 </li>
               ))
             }
           </ul>
-        </div>
+        </Blinking>
       </div>
     </div>
   </Layouts>

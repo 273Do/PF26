@@ -15,10 +15,6 @@ type Props = {
 const { text, class: className } = Astro.props;
 ---
 
-<p class={cn("pl-px opacity-0", className)} data-text-reveal>
-  {text}
-</p>
-
 <script>
   import { gsap } from "gsap";
   import SplitText from "gsap/SplitText";
@@ -51,3 +47,7 @@ const { text, class: className } = Astro.props;
 
   document.addEventListener("astro:page-load", initTextReveal);
 </script>
+
+<p class={cn("pl-px opacity-0", className)} data-text-reveal>
+  {text}
+</p>
