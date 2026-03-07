@@ -1,0 +1,23 @@
+---
+import ProfileArticle from "./ProfileArticle.astro";
+import ProfileHeader from "./ProfileHeader.astro";
+import Blinking from "../animations/Blinking.astro";
+import { Separator } from "../ui/separator";
+
+import { fetchAbout } from "@/lib/fetchContents";
+
+const { about } = await fetchAbout();
+
+const { name, bio, description } = about;
+---
+
+<div class="w-full sm:w-3/5 sm:pr-6">
+  <div class="h-[60vh]"></div>
+  <Blinking>
+    <ProfileHeader name={name} bio={bio} />
+    <Separator className="my-3" />
+  </Blinking>
+  <Blinking delay={0.2}>
+    <ProfileArticle description={description} />
+  </Blinking>
+</div>

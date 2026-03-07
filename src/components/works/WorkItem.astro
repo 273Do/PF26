@@ -1,0 +1,41 @@
+---
+import { Badge } from "../ui/badge";
+import { Separator } from "../ui/separator";
+
+import { PAGE_LINKS } from "@/consts";
+import type { WorkObj } from "@/lib/fetchContents";
+
+type Props = Pick<
+  WorkObj,
+  "documentId" | "title" | "description" | "tags" | "releaseDate"
+>;
+
+type Tag = NonNullable<WorkObj["tags"]>[number];
+
+const worksHref = PAGE_LINKS.find((link) => link.title === "Works")
+  ?.href as string;
+
+const { documentId, title, description, tags, releaseDate } = Astro.props;
+---
+
+<a href={`/${worksHref}/${documentId}`}>
+  <div
+    class="flex cursor-pointer flex-col gap-1 py-3 duration-200 hover:bg-primary-foreground sm:px-3"
+  >
+    <p class="text-2xl font-semibold">{title}</p>
+    <p class="text-muted-foreground">{description}</p>
+    <div class="flex items-center justify-between">
+      <div class="flex gap-3">
+        {
+          (tags as Tag[])?.map((tag) => (
+            <Badge variant="secondary">{tag.name}</Badge>
+          ))
+        }
+      </div>
+      <p class="font-mono text-sm text-muted-foreground">
+        {releaseDate}
+      </p>
+    </div>
+  </div>
+  <Separator />
+</a>

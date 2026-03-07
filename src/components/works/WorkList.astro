@@ -1,0 +1,31 @@
+---
+import WorkItem from "./WorkItem.astro";
+import Blinking from "../animations/Blinking.astro";
+import { Separator } from "../ui/separator";
+
+import type { WorkObj } from "@/lib/fetchContents";
+
+type Props = {
+  works: WorkObj[];
+};
+
+const { works } = Astro.props;
+---
+
+<div class="flex w-full flex-col sm:w-3/5 sm:pl-6">
+  <div class="h-[3vh]"></div>
+  <Separator />
+  {
+    works.map(({ documentId, title, description, releaseDate, tags }, i) => (
+      <Blinking delay={0.1 * i}>
+        <WorkItem
+          documentId={documentId}
+          title={title}
+          description={description}
+          tags={tags}
+          releaseDate={releaseDate}
+        />
+      </Blinking>
+    ))
+  }
+</div>

@@ -1,0 +1,32 @@
+---
+import Image from "astro/components/Image.astro";
+
+import myImg from "@/assets/imgs/me.jpg";
+
+type Props = {
+  /**
+   * 名前
+   */
+  name: string;
+  /**
+   * プロフィール
+   */
+  bio: string;
+};
+
+const { name, bio } = Astro.props;
+---
+
+<div class="flex items-center gap-6">
+  <Image
+    src={myImg}
+    width={70}
+    height={70}
+    alt="me"
+    class="-z-10 rounded-full"
+  />
+  <div>
+    <p>{name}</p>
+    <p class="text-muted-foreground">{bio}</p>
+  </div>
+</div>

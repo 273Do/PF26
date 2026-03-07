@@ -1,6 +1,11 @@
 ---
+import Blinking from "@/components/animations/Blinking.astro";
 import TextReveal from "@/components/animations/TextReveal.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
+import WorkList from "@/components/works/WorkList.astro";
+import { fetchWorks } from "@/lib/fetchContents";
+
+const { works, count } = await fetchWorks();
 ---
 
 <!doctype html>
@@ -13,9 +18,15 @@ import Layouts from "@/components/layouts/Layouts.astro";
           text="Works"
           class="leading-none font-semibold md:translate-y-4 lg:translate-y-6"
         />
-        <!-- <WorksCount locale={locale} /> -->
+        <Blinking>
+          <p
+            class="text-end text-3xl font-semibold text-muted-foreground sm:text-5xl"
+          >
+            ({count})
+          </p>
+        </Blinking>
       </div>
-      <!-- <WorkList locale={locale} /> -->
+      <WorkList works={works} />
     </div>
   </Layouts>
 </html>

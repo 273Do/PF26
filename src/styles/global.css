@@ -179,3 +179,89 @@
   display: inline-block;
   white-space: nowrap;
 }
+
+/* markdown area */
+#md {
+  @apply space-y-4 text-foreground;
+}
+
+#md h1 {
+  @apply text-4xl font-bold tracking-tight md:text-5xl;
+}
+
+#md h2 {
+  @apply text-3xl font-semibold tracking-tight;
+}
+
+#md h3 {
+  @apply text-2xl font-medium;
+}
+
+#md h4 {
+  @apply text-xl font-medium;
+}
+
+#md p {
+  @apply leading-relaxed text-muted-foreground;
+}
+
+#md ul {
+  @apply list-disc space-y-1 pl-6 text-muted-foreground;
+}
+
+#md ol {
+  @apply list-decimal space-y-1 pl-6 text-muted-foreground;
+}
+
+#md li {
+  @apply leading-relaxed;
+}
+
+#md a {
+  @apply text-foreground underline decoration-muted-foreground underline-offset-4 hover:decoration-foreground;
+}
+
+#md code {
+  @apply rounded bg-muted px-1.5 py-0.5 font-mono text-sm;
+}
+
+#md pre {
+  @apply overflow-x-auto rounded-lg bg-muted p-4;
+}
+
+#md pre code {
+  @apply bg-transparent p-0;
+}
+
+#md blockquote {
+  @apply border-l-4 border-muted-foreground pl-4 italic text-muted-foreground;
+}
+
+#md hr {
+  @apply my-8 border-border;
+}
+
+#md img {
+  @apply rounded-lg mb-4;
+}
+
+#md table {
+  @apply w-full border-collapse;
+}
+
+#md th {
+  @apply border border-border bg-muted px-4 py-2 text-left font-semibold;
+}
+
+#md td {
+  @apply border border-border px-4 py-2;
+}
+
+#md > * + * {
+  @apply mt-4;
+}
+
+#md > h2 + *,
+#md > h3 + * {
+  @apply mt-6;
+}

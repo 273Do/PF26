@@ -4,22 +4,25 @@ import Blinking from "../animations/Blinking.astro";
 import { PAGE_LINKS } from "@/consts";
 import { cn } from "@/lib/utils";
 
-const worksCount = 10;
-const showcaseCount = 5;
-
-const counts: Record<string, number> = {
-  "/works": worksCount,
-  "/showcase": showcaseCount,
-};
+const showcaseCount = 1;
 
 type Props = {
   /**
    * 現在のパス
    */
   currentPath: string;
+  /**
+   * ｗorksのデータ数
+   */
+  worksCount: number;
 };
 
-const { currentPath } = Astro.props;
+const { currentPath, worksCount } = Astro.props;
+
+const counts: Record<string, number> = {
+  works: worksCount,
+  showcase: showcaseCount,
+};
 ---
 
 {
@@ -33,7 +36,7 @@ const { currentPath } = Astro.props;
           return (
             <Blinking delay={0.1 * i} once>
               <li class={cn(isActive && "text-foreground")}>
-                <a href={href} class="flex">
+                <a href={`/${href}`} class="flex">
                   <p class="hover:underline">{title}</p>
                   {count && <p class="text-[10px]">({count})</p>}
                 </a>

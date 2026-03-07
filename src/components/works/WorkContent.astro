@@ -1,0 +1,47 @@
+---
+import WorkArticle from "./WorkArticle.astro";
+import WorkHeader from "./WorkHeader.astro";
+import WorksFooter from "./WorksFooter.astro";
+import TextScramble from "../animations/TextScramble.astro";
+
+import type { WorkObj } from "@/lib/fetchContents";
+import { getRepositoryStats } from "@/lib/repositoryStatsQuery";
+
+type Props = { workDetails: WorkObj };
+
+const {
+  title,
+  tags,
+  releaseDate,
+  githubLink,
+  appLink,
+  otherLink,
+  article,
+  technologies,
+} = Astro.props.workDetails;
+
+const { repositoryStats } = await getRepositoryStats(githubLink);
+---
+
+<div>
+  <TextScramble text={title} class="-z-10 text-4xl font-semibold sm:text-7xl" />
+  <div class="mt-3">
+    <div class="flex w-full flex-col items-center space-y-1">
+      <WorkHeader
+        tags={tags}
+        releaseDate={releaseDate}
+        githubLink={githubLink}
+        appLink={appLink}
+        otherLink={otherLink}
+        repositoryStats={repositoryStats}
+      />
+      <WorkArticle article={article} technologies={technologies} />
+      <WorksFooter
+        releaseDate={releaseDate}
+        githubLink={githubLink}
+        appLink={appLink}
+        otherLink={otherLink}
+      />
+    </div>
+  </div>
+</div>

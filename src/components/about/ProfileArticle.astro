@@ -1,0 +1,15 @@
+---
+import { marked } from "marked";
+
+type Props = {
+  /**
+   * md文章
+   */
+  description: string;
+};
+
+const { description } = Astro.props;
+const html = marked(description);
+---
+
+<div id="md" set:html={html} />
