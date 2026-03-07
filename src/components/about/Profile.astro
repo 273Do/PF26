@@ -1,0 +1,29 @@
+---
+import ProfileArticle from "./ProfileArticle.astro";
+import ProfileHeader from "./ProfileHeader.astro";
+import type { components } from "../../../types/schema";
+import Blinking from "../animations/Blinking.astro";
+import { Separator } from "../ui/separator";
+
+import fetchApi from "@/lib/strapi";
+
+type AboutObj = components["schemas"]["About"];
+
+const about = await fetchApi<AboutObj>({
+  endpoint: "about", // the content type to fetch
+  wrappedByKey: "data", // the key to unwrap the response
+});
+
+const { name, bio, description } = about;
+---
+
+<div class="w-full sm:w-3/5 sm:pr-6">
+  <div class="h-[60vh]"></div>
+  <Blinking>
+    <ProfileHeader name={name} bio={bio} />
+    <Separator className="my-3" />
+  </Blinking>
+  <Blinking delay={0.2}>
+    <ProfileArticle description={description} />
+  </Blinking>
+</div>
