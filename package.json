@@ -40,6 +40,7 @@
     "fitty": "^2.4.2",
     "gsap": "^3.14.2",
     "lucide-react": "^0.575.0",
+    "marked": "^17.0.4",
     "openapi-fetch": "^0.17.0",
     "openapi-typescript": "^7.13.0",
     "radix-ui": "^1.4.3",

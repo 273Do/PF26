@@ -1,0 +1,8 @@
+---
+import { marked } from "marked";
+
+const { description } = Astro.props;
+const html = marked(description);
+---
+
+<div id="md" set:html={html} />
