@@ -1,0 +1,48 @@
+---
+type Props = {
+  /**
+   * テキスト
+   */
+  text: string;
+  /**
+   * アニメーション開始の遅延時間（秒）
+   */
+  delay?: number;
+  /**
+   * class
+   */
+  class?: string;
+};
+
+const { text, delay = 0, class: className } = Astro.props;
+---
+
+<script>
+  import { gsap } from "gsap";
+  import ScrambleTextPlugin from "gsap/ScrambleTextPlugin";
+
+  gsap.registerPlugin(ScrambleTextPlugin);
+
+  const initTextReveal = () => {
+    document
+      .querySelectorAll<HTMLElement>("[data-text-scramble]")
+      .forEach((el) => {
+        const delay = parseFloat(el.dataset.delay ?? "0");
+
+        gsap.to(el, {
+          duration: 1,
+          scrambleText: {
+            text: el.dataset.text ?? "",
+            chars: "upperAndLowerCase",
+            revealDelay: delay,
+            speed: 1.5,
+          },
+        });
+      });
+  };
+
+  document.addEventListener("astro:page-load", initTextReveal);
+</script>
+
+<div class={className} data-text-scramble data-text={text} data-delay={delay}>
+</div>

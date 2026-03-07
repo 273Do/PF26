@@ -1,0 +1,53 @@
+---
+import { cn } from "@/lib/utils";
+
+type Props = {
+  /**
+   * テキスト
+   */
+  text: string;
+  /**
+   * class
+   */
+  class?: string;
+};
+
+const { text, class: className } = Astro.props;
+---
+
+<script>
+  import { gsap } from "gsap";
+  import SplitText from "gsap/SplitText";
+  import fitty from "fitty";
+
+  gsap.registerPlugin(SplitText);
+
+  const initTextReveal = () => {
+    document
+      .querySelectorAll<HTMLElement>("[data-text-reveal]")
+      .forEach((el) => {
+        fitty(el);
+
+        const split = SplitText.create(el, {
+          type: "chars",
+          autoSplit: true,
+          mask: "chars",
+        });
+
+        gsap.set(el, { opacity: 1 });
+
+        gsap.from(split.chars, {
+          duration: 0.5,
+          yPercent: 100,
+          stagger: 0.07,
+          ease: "expo.out",
+        });
+      });
+  };
+
+  document.addEventListener("astro:page-load", initTextReveal);
+</script>
+
+<p class={cn("pl-px opacity-0", className)} data-text-reveal>
+  {text}
+</p>

@@ -1,0 +1,76 @@
+---
+import Blinking from "@/components/animations/Blinking.astro";
+import TextReveal from "@/components/animations/TextReveal.astro";
+import TextScramble from "@/components/animations/TextScramble.astro";
+import Layouts from "@/components/layouts/Layouts.astro";
+import {
+  CONTACT_SNS_LINKS,
+  MAIL_ADDRESS,
+  SNS_LINKS,
+  SUPPORT_LINKS,
+} from "@/consts";
+
+type LinkObj = {
+  /**
+   * リンクタイトル
+   */
+  title: string;
+  /**
+   * リンクのurl
+   */
+  href: string;
+};
+
+const CONTACT_LINKS: LinkObj[] = [
+  ...SNS_LINKS,
+  ...CONTACT_SNS_LINKS,
+  ...SUPPORT_LINKS,
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <Layouts>
+    <div class="mb-9 flex size-full flex-col items-end justify-end">
+      <div class="h-[30vh]"></div>
+      <div class="flex w-4/5 flex-col gap-2 sm:w-3/5">
+        <div>
+          <TextReveal
+            text="Contact"
+            class="translate-y-4 leading-none font-semibold md:translate-y-4 lg:translate-y-6"
+          />
+        </div>
+        <Blinking class="ml-2">
+          <a
+            class="cursor-alias text-xl font-semibold hover:underline md:text-3xl lg:text-4xl"
+            href={`mailto:${MAIL_ADDRESS}`}
+          >
+            {MAIL_ADDRESS}
+          </a>
+        </Blinking>
+        <Blinking class="ml-2" delay={0.2}>
+          <ul class="inline-flex flex-col">
+            {
+              CONTACT_LINKS.map(({ href, title }, i) => (
+                <li>
+                  <a
+                    class="cursor-alias hover:underline"
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <TextScramble
+                      text={title}
+                      delay={0.015 * CONTACT_LINKS.length * i}
+                      class={i === CONTACT_LINKS.length - 1 ? "mt-2" : ""}
+                    />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </Blinking>
+      </div>
+    </div>
+  </Layouts>
+</html>

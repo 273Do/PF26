@@ -1,0 +1,47 @@
+---
+import Blinking from "../animations/Blinking.astro";
+
+import { PAGE_LINKS } from "@/consts";
+import { cn } from "@/lib/utils";
+
+const worksCount = 10;
+const showcaseCount = 5;
+
+const counts: Record<string, number> = {
+  "/works": worksCount,
+  "/showcase": showcaseCount,
+};
+
+type Props = {
+  /**
+   * 現在のパス
+   */
+  currentPath: string;
+};
+
+const { currentPath } = Astro.props;
+---
+
+{
+  currentPath !== "" && (
+    <ul class="hidden gap-6 font-mono text-sm text-muted-foreground sm:flex">
+      {PAGE_LINKS.filter((link) => link.href !== "").map(
+        ({ href, title }, i) => {
+          const count = counts[href];
+          const isActive = currentPath === href;
+
+          return (
+            <Blinking delay={0.1 * i} once>
+              <li class={cn(isActive && "text-foreground")}>
+                <a href={href} class="flex">
+                  <p class="hover:underline">{title}</p>
+                  {count && <p class="text-[10px]">({count})</p>}
+                </a>
+              </li>
+            </Blinking>
+          );
+        },
+      )}
+    </ul>
+  )
+}

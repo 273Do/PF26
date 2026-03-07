@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+
+import Blinking from "../animations/Blinking.astro";
+
+import notFoundImage from "@/assets/imgs/404.png";
+import serverErrorImage from "@/assets/imgs/500.png";
+
+const { statusCode } = Astro.props;
+
+type Props = {
+  /**
+   * HTTPエラーステータスコード
+   */
+  statusCode: 404 | 500;
+};
+
+const image: Record<number, ImageMetadata> = {
+  404: notFoundImage,
+  500: serverErrorImage,
+};
+---
+
+<Blinking
+  class="flex h-[calc(100vh-36px)] flex-col items-center justify-center"
+>
+  <Image
+    src={image[statusCode]}
+    width={700}
+    height={700}
+    alt="error_img"
+    class="pointer-events-none"
+  />
+  <p class="text-muted-foreground">
+    illustration by
+    <a
+      href={import.meta.env.PUBLIC_ERROR_ILLUSTRATOR_LINK}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="ml-1.5 font-mono text-primary"
+    >
+      {import.meta.env.PUBLIC_ERROR_ILLUSTRATOR_CREATOR_X_ACCOUNT}
+    </a>
+  </p>
+</Blinking>

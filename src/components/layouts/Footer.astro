@@ -1,0 +1,42 @@
+---
+import Copyright from "./Copyright";
+import { SNS_LINKS } from "../../consts";
+import Blinking from "../animations/Blinking.astro";
+
+import { cn } from "@/lib/utils";
+
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+
+const isFixed = pathname === "showcase" || pathname === "contact";
+---
+
+<footer
+  class={cn(
+    isFixed ? "fixed bottom-0" : "absolute",
+    `
+      z-0 flex h-9 w-full items-center justify-end px-3 font-mono text-sm
+      sm:z-100 sm:justify-between sm:px-6
+      dark:mix-blend-difference
+    `,
+  )}
+>
+  <ul class="hidden gap-6 sm:flex">
+    {
+      SNS_LINKS.map(({ href, title }, i) => (
+        <Blinking delay={0.1 * i} once>
+          <a
+            href={href}
+            class="cursor-alias hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <p>{title}</p>
+          </a>
+        </Blinking>
+      ))
+    }
+  </ul>
+  <Blinking delay={0.1} once>
+    <Copyright />
+  </Blinking>
+</footer>

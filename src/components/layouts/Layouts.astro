@@ -1,0 +1,53 @@
+---
+import { ViewTransitions } from "astro:transitions";
+
+import BaseHead from "./BaseHead.astro";
+
+import Footer from "@/components/layouts/Footer.astro";
+import Header from "@/components/layouts/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts";
+
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+
+const hasHeaderOffset = pathname === "" || pathname === "contact";
+---
+
+<script is:inline>
+  const applyTheme = () => {
+    const theme =
+      localStorage.getItem("theme") ??
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light");
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  };
+  applyTheme();
+  document.addEventListener("astro:after-swap", applyTheme);
+</script>
+
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <ViewTransitions />
+  </head>
+  <body
+    class="font-sans antialiased selection:bg-secondary-foreground selection:text-primary-foreground"
+  >
+    <Header />
+    <div class="px-3 sm:px-6">
+      {
+        hasHeaderOffset ? (
+          <slot />
+        ) : (
+          <>
+            <div class="fixed h-9 w-full bg-background" />
+            <main class="pt-9">
+              <slot />
+            </main>
+          </>
+        )
+      }
+    </div>
+    <Footer />
+  </body>
+</html>
