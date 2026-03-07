@@ -1,18 +1,15 @@
 ---
 import WorkItem from "./WorkItem.astro";
-import type { components } from "../../../types/schema";
 import Blinking from "../animations/Blinking.astro";
 import { Separator } from "../ui/separator";
 
-import fetchApi from "@/lib/strapi";
+import type { WorkObj } from "@/lib/fetchContents";
 
-export type WorkObj = components["schemas"]["Work"];
+type Props = {
+  works: WorkObj[];
+};
 
-const works = await fetchApi<WorkObj[]>({
-  endpoint: "works",
-  wrappedByKey: "data",
-  query: { "sort[0]": "releaseDate:desc", "populate[tags]": "*" },
-});
+const { works } = Astro.props;
 ---
 
 <div class="flex w-full flex-col sm:w-3/5 sm:pl-6">

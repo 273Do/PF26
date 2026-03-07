@@ -9,7 +9,6 @@ import { Button } from "../ui/button";
 import { PAGE_LINKS } from "@/consts";
 import { cn } from "@/lib/utils";
 
-const worksCount = 10;
 const showcaseCount = 5;
 
 type Props = {
@@ -17,14 +16,18 @@ type Props = {
    * 現在のパス
    */
   currentPath: string;
+  /**
+   * ｗorksのデータ数
+   */
+  worksCount: number;
 };
 
-export const MobilePageNavigation = ({ currentPath }: Props) => {
+export const MobilePageNavigation = ({ currentPath, worksCount }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const counts: Record<string, number> = {
-    "/works": worksCount,
-    "/showcase": showcaseCount,
+    works: worksCount,
+    showcase: showcaseCount,
   };
 
   return (

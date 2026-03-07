@@ -7,7 +7,11 @@ import { MobilePageNavigation } from "./MobilePageNavigation";
 import PageNavigation from "./PageNavigation.astro";
 import { Button } from "../ui/button";
 
+import { fetchWorks } from "@/lib/fetchContents";
+
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+
+const { count: worksCount } = await fetchWorks();
 ---
 
 <header
@@ -23,8 +27,12 @@ const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
       priority
     />
   </a>
-  <PageNavigation currentPath={pathname} />
-  <MobilePageNavigation currentPath={pathname} client:load />
+  <PageNavigation currentPath={pathname} worksCount={worksCount} />
+  <MobilePageNavigation
+    currentPath={pathname}
+    worksCount={worksCount}
+    client:load
+  />
   <div class="hidden sm:flex">
     <Button variant="ghost" size="icon-sm" className="cursor-pointer">
       <Languages className="size-4" />

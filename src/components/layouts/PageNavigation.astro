@@ -4,22 +4,25 @@ import Blinking from "../animations/Blinking.astro";
 import { PAGE_LINKS } from "@/consts";
 import { cn } from "@/lib/utils";
 
-const worksCount = 10;
 const showcaseCount = 5;
-
-const counts: Record<string, number> = {
-  "/works": worksCount,
-  "/showcase": showcaseCount,
-};
 
 type Props = {
   /**
    * 現在のパス
    */
   currentPath: string;
+  /**
+   * ｗorksのデータ数
+   */
+  worksCount: number;
 };
 
-const { currentPath } = Astro.props;
+const { currentPath, worksCount } = Astro.props;
+
+const counts: Record<string, number> = {
+  works: worksCount,
+  showcase: showcaseCount,
+};
 ---
 
 {
