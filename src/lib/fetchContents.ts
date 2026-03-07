@@ -25,3 +25,12 @@ export const fetchWorks = async () => {
 
   return { works, count };
 };
+
+export const fetchWork = async (documentId: string) => {
+  const workDetails = await fetchApi<WorkObj>({
+    endpoint: `works/${documentId}`,
+    wrappedByKey: "data",
+  });
+
+  return { workDetails };
+};
