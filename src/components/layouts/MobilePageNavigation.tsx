@@ -61,7 +61,7 @@ export const MobilePageNavigation = ({ currentPath, worksCount }: Props) => {
                 return (
                   <li className={cn(isActive && "text-foreground")}>
                     <a
-                      href={href}
+                      href={`/${href}`}
                       onClick={() => setOpen(false)}
                       className="flex"
                     >

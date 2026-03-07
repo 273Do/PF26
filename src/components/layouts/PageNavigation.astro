@@ -36,7 +36,7 @@ const counts: Record<string, number> = {
           return (
             <Blinking delay={0.1 * i} once>
               <li class={cn(isActive && "text-foreground")}>
-                <a href={href} class="flex">
+                <a href={`/${href}`} class="flex">
                   <p class="hover:underline">{title}</p>
                   {count && <p class="text-[10px]">({count})</p>}
                 </a>
