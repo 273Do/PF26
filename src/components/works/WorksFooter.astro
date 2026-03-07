@@ -1,0 +1,78 @@
+---
+import { SiGithub } from "@icons-pack/react-simple-icons";
+import { BookText, MoveLeft, SquareArrowOutUpRight } from "lucide-react";
+
+import { PAGE_LINKS } from "@/consts";
+import type { WorkObj } from "@/lib/fetchContents";
+
+/**
+ * @property releaseDate - リリース日
+ * @property githubLink - GitHubリンク
+ * @property appLink - アプリリンク
+ * @property otherLink - その他リンク
+ */
+type Props = Pick<
+  WorkObj,
+  "releaseDate" | "githubLink" | "appLink" | "otherLink"
+>;
+
+const { releaseDate, githubLink, appLink, otherLink } = Astro.props;
+
+const worksHref = PAGE_LINKS.find((link) => link.title === "Works")
+  ?.href as string;
+
+const backHref = `/${worksHref}`;
+---
+
+<div class="flex w-full max-w-4xl flex-col gap-1">
+  <div class="flex w-full items-center justify-between">
+    <p class="font-mono text-sm text-muted-foreground">{releaseDate}</p>
+    <ul class="flex gap-3">
+      {
+        githubLink && (
+          <a
+            class="cursor-alias hover:underline"
+            href={githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <SiGithub className="size-4 duration-200 hover:opacity-75" />
+          </a>
+        )
+      }
+      {
+        otherLink && (
+          <a
+            class="cursor-alias hover:underline"
+            href={otherLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BookText className="size-4 duration-200 hover:opacity-75" />
+          </a>
+        )
+      }
+      {
+        appLink && (
+          <a
+            class="cursor-alias hover:underline"
+            href={appLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <SquareArrowOutUpRight className="size-4 duration-200 hover:opacity-75" />
+          </a>
+        )
+      }
+    </ul>
+  </div>
+  <div class="-mt-1">
+    <a
+      class="inline-flex items-center gap-2 font-mono text-sm hover:underline"
+      href={backHref}
+    >
+      <MoveLeft className="size-3" />
+      <p>Back</p>
+    </a>
+  </div>
+</div>

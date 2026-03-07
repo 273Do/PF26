@@ -1,0 +1,26 @@
+---
+import Layouts from "@/components/layouts/Layouts.astro";
+import WorkContent from "@/components/works/WorkContent.astro";
+import { fetchWork, fetchWorks } from "@/lib/fetchContents";
+
+export const getStaticPaths = async () => {
+  const { works } = await fetchWorks();
+
+  return works.map((work) => ({
+    params: { slug: work.documentId },
+  }));
+};
+
+const { slug } = Astro.params;
+const { workDetails } = await fetchWork(slug!);
+---
+
+<!doctype html>
+<html lang="en">
+  <Layouts>
+    <div class="w-full">
+      <div class="h-[3vh]"></div>
+      <WorkContent workDetails={workDetails} />
+    </div>
+  </Layouts>
+</html>

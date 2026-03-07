@@ -242,7 +242,7 @@
 }
 
 #md img {
-  @apply rounded-lg;
+  @apply rounded-lg mb-4;
 }
 
 #md table {

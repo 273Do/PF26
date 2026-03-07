@@ -1,0 +1,17 @@
+---
+import ProfileArticle from "../about/ProfileArticle.astro";
+import { Separator } from "../ui/separator";
+
+import type { WorkObj } from "@/lib/fetchContents";
+
+type Props = Pick<WorkObj, "article" | "technologies">;
+
+const { article } = Astro.props;
+---
+
+<article class="z-10 w-full max-w-4xl items-center space-y-4 text-foreground">
+  <!-- <IconMarquee iconNameList={technologyArray} /> -->
+  <Separator />
+  <ProfileArticle description={article} />
+  <Separator className="my-1" />
+</article>

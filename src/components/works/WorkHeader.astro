@@ -1,0 +1,133 @@
+---
+import { SiGithub } from "@icons-pack/react-simple-icons";
+import {
+  BookText,
+  MoveLeft,
+  SquareArrowOutUpRight,
+  CircleDot,
+  UsersRound,
+  GitBranch,
+  GitCommitVertical,
+  GitPullRequestArrow,
+} from "lucide-react";
+
+import { Badge } from "../ui/badge";
+
+import { PAGE_LINKS } from "@/consts";
+import type { WorkObj } from "@/lib/fetchContents";
+import type { RepositoryStatsObj } from "@/lib/repositoryStatsQuery";
+
+/**
+ * @property tags - タグ
+ * @property releaseDate - リリース日
+ * @property githubLink - GitHubリンク
+ * @property appLink - アプリリンク
+ * @property otherLink - その他リンク
+ * @property repositoryStats - リポジトリ統計
+ */
+type Props = Pick<
+  WorkObj,
+  "tags" | "releaseDate" | "githubLink" | "appLink" | "otherLink"
+> &
+  RepositoryStatsObj;
+
+const { releaseDate, githubLink, appLink, otherLink, tags, repositoryStats } =
+  Astro.props;
+
+const { issues, pullRequests, branches, commits, contributors } =
+  repositoryStats || {};
+
+const worksHref = PAGE_LINKS.find((link) => link.title === "Works")
+  ?.href as string;
+
+const backHref = `/${worksHref}`;
+---
+
+<div class="flex w-full max-w-4xl flex-col gap-1">
+  <div class="-mb-1">
+    <a
+      class="inline-flex items-center gap-2 font-mono text-sm hover:underline"
+      href={backHref}
+    >
+      <MoveLeft className="size-3" />
+      <p>Back</p>
+    </a>
+  </div>
+  <div class="flex w-full items-center justify-between">
+    <p class="font-mono text-sm text-muted-foreground">{releaseDate}</p>
+
+    <ul class="flex gap-3">
+      {
+        githubLink && (
+          <a
+            class="cursor-alias hover:underline"
+            href={githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <SiGithub className="size-4 duration-200 hover:opacity-75" />
+          </a>
+        )
+      }
+      {
+        otherLink && (
+          <a
+            class="cursor-alias hover:underline"
+            href={otherLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <BookText className="size-4 duration-200 hover:opacity-75" />
+          </a>
+        )
+      }
+      {
+        appLink && (
+          <a
+            class="cursor-alias hover:underline"
+            href={appLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <SquareArrowOutUpRight className="size-4 duration-200 hover:opacity-75" />
+          </a>
+        )
+      }
+    </ul>
+  </div>
+  <div
+    class="w-full items-center justify-between space-y-2 sm:flex sm:space-y-0"
+  >
+    <div class="flex gap-3">
+      {
+        tags?.map(({ documentId, name }) => (
+          <Badge key={documentId} variant="secondary">
+            {name}
+          </Badge>
+        ))
+      }
+    </div>
+    <div class="flex items-center gap-3 text-sm text-muted-foreground">
+      <div class="flex items-center justify-center gap-1">
+        <GitBranch className="size-4" />
+        <p>{repositoryStats ? branches : "-"}</p>
+      </div>
+      <div class="flex items-center justify-center gap-1">
+        <GitCommitVertical className="size-4" />
+        <p>{repositoryStats ? commits : "-"}</p>
+      </div>
+      <div class="flex items-center justify-center gap-1">
+        <GitPullRequestArrow className="size-4" />
+        <p>{repositoryStats ? pullRequests : "-"}</p>
+      </div>
+      <div class="flex items-center justify-center gap-1">
+        <CircleDot className="size-4" />
+        <p>{repositoryStats ? issues : "-"}</p>
+      </div>
+      <div class="flex items-center justify-center gap-1">
+        <UsersRound className="size-4" />
+        <p>{repositoryStats ? contributors : "-"}</p>
+      </div>
+    </div>
+  </div>
+</div>
