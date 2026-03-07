@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { PAGE_LINKS } from "@/consts";
 import { cn } from "@/lib/utils";
 
-const showcaseCount = 5;
+const showcaseCount = 1;
 
 type Props = {
   /**
