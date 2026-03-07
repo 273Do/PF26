@@ -11,7 +11,7 @@ export type WorkObj = components["schemas"]["Work"];
 const works = await fetchApi<WorkObj[]>({
   endpoint: "works",
   wrappedByKey: "data",
-  query: { "sort[0]": "releaseDate:desc" },
+  query: { "sort[0]": "releaseDate:desc", "populate[tags]": "*" },
 });
 ---
 
