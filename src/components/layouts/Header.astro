@@ -9,7 +9,9 @@ import { Button } from "../ui/button";
 
 import { fetchWorks } from "@/lib/fetchContents";
 
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+const pathname = Astro.url.pathname
+  .replace(import.meta.env.BASE_URL, "")
+  .split("/")[0];
 
 const { count: worksCount } = await fetchWorks();
 ---
