@@ -3,6 +3,7 @@ import type { RefObject } from "react";
 
 import { RigidBody } from "@react-three/rapier";
 import type * as THREE from "three";
+import { useWebHaptics } from "web-haptics/react";
 
 import { Material } from "./Material";
 
@@ -28,14 +29,16 @@ const SplitModelInner = ({ mesh, index, frameRef }: Props) => {
 
   console.log(href, title);
 
+  const { trigger, isSupported } = useWebHaptics();
+
   return (
     <RigidBody
       colliders="hull"
       ccd
       friction={1}
       restitution={0.9}
-      onCollisionExit={() =>
-        frameRef.current <= 1000 && console.log("collision")
+      onCollisionEnter={() =>
+        frameRef.current <= 1500 && isSupported && trigger()
       }
     >
       <mesh
