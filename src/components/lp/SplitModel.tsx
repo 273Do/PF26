@@ -1,10 +1,11 @@
-import { memo } from "react";
+import { memo, useRef } from "react";
 import type { RefObject } from "react";
 
 import { RigidBody } from "@react-three/rapier";
 import type * as THREE from "three";
 import { useWebHaptics } from "web-haptics/react";
 
+import { BlobTrackingAnimation } from "./BlobTrackingAnimation";
 import { Material } from "./Material";
 
 import { PAGE_LINKS } from "@/consts";
@@ -30,6 +31,8 @@ const SplitModelInner = ({ mesh, index, frameRef }: Props) => {
   console.log(href, title);
 
   const { trigger, isSupported } = useWebHaptics();
+  // 物理演算で動く実際のmeshオブジェクトのref
+  const meshRef = useRef<THREE.Mesh>(null);
 
   return (
     <RigidBody
@@ -42,25 +45,14 @@ const SplitModelInner = ({ mesh, index, frameRef }: Props) => {
       }
     >
       <mesh
+        ref={meshRef}
         geometry={(mesh as THREE.Mesh).geometry}
         castShadow
         receiveShadow
-        // onClick={() => {
-        //   setArrowTitle(null);
-        //   // redirect(href === "/contact" ? href : `/${DEFAULT_LOCALE}${href}`);
-        // }}
-        // onPointerOver={(e) => {
-        //   e.stopPropagation();
-        //   document.body.style.cursor = "pointer";
-        //   setArrowTitle(title);
-        // }}
-        // onPointerOut={(e) => {
-        //   e.stopPropagation();
-        //   document.body.style.cursor = "auto";
-        //   setArrowTitle(null);
-        // }}
       >
         <Material />
+        {/* meshRefが確定した後に動くmeshを渡す */}
+        <BlobTrackingAnimation mesh={mesh} liveMeshRef={meshRef} />
       </mesh>
       {/* <RoutingBox geometry={(mesh as THREE.Mesh).geometry} /> */}
     </RigidBody>
