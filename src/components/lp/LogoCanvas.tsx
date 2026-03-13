@@ -23,9 +23,10 @@ export const LogoCanvas = () => {
         camera={{ fov: 30, near: 0.1, far: 1000, position: [0, 2.25, 5] }}
       >
         {/* <gridHelper />
-          <axesHelper args={[5]} /> */}
+        <axesHelper args={[5]} /> */}
         <Suspense fallback={null}>
-          <OrbitControls enableZoom={false} enablePan={false} />
+          {/* <OrbitControls enableZoom={false} enablePan={false} /> */}
+          <OrbitControls />
           <Models />
           <EnvironmentLight />
           <PostProcess />

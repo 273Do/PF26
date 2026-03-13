@@ -60,7 +60,13 @@ export const BlobTrackingAnimation = ({ mesh, liveMeshRef }: Props) => {
       const div = document.createElement("div");
 
       div.className =
-        "absolute border border-white/80 pointer-events-none hidden box-border";
+        "absolute border border-primary pointer-events-none hidden box-border";
+
+      // 座標表示用ラベルをボックス左下に配置
+      const label = document.createElement("span");
+      label.className =
+        "absolute left-0 top-full font-mono text-[10px] text-primary whitespace-nowrap";
+      div.appendChild(label);
 
       parent.appendChild(div);
 
@@ -126,11 +132,18 @@ export const BlobTrackingAnimation = ({ mesh, liveMeshRef }: Props) => {
         h,
       );
 
+      const left = Math.min(sa.x, sb.x);
+      const top = Math.min(sa.y, sb.y);
+
       div.classList.remove("hidden");
-      div.style.left = `${Math.min(sa.x, sb.x)}px`;
-      div.style.top = `${Math.min(sa.y, sb.y)}px`;
+      div.style.left = `${left}px`;
+      div.style.top = `${top}px`;
       div.style.width = `${Math.abs(sb.x - sa.x)}px`;
       div.style.height = `${Math.abs(sb.y - sa.y)}px`;
+
+      // ボックス左下に座標を表示
+      const label = div.querySelector("span");
+      if (label) label.textContent = `x:${left.toFixed(0)} y:${top.toFixed(0)}`;
     });
   });
 

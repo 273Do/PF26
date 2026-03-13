@@ -13,6 +13,7 @@ export const Material = () => {
         samples={15}
       /> */}
       <meshNormalMaterial />
+      {/* <meshStandardMaterial color={"#000"} /> */}
     </>
   );
 };
