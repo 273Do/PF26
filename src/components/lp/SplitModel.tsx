@@ -52,7 +52,11 @@ const SplitModelInner = ({ mesh, index, frameRef }: Props) => {
       >
         <Material />
         {/* meshRefが確定した後に動くmeshを渡す */}
-        <BlobTrackingAnimation mesh={mesh} liveMeshRef={meshRef} />
+        <BlobTrackingAnimation
+          mesh={mesh}
+          liveMeshRef={meshRef}
+          index={index}
+        />
       </mesh>
       {/* <RoutingBox geometry={(mesh as THREE.Mesh).geometry} /> */}
     </RigidBody>
