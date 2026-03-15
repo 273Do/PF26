@@ -5,10 +5,22 @@ import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
 type Props = {
+  /**
+   * モデルのメッシュ
+   */
   mesh: THREE.Object3D;
-  // 物理演算で実際に動いているThree.js meshのref
+  /**
+   * ルーティング配列の番号
+   */
+  index: number;
+  /**
+   * 物理演算で実際に動いているThree.js meshのref
+   */
   liveMeshRef: RefObject<THREE.Mesh | null>;
 };
+
+// ラベルのリスト
+const labels = ["Asterisk", "Three", "Seven", "Two"];
 
 // 同時に表示するオーバーレイrectの最大数
 const MAX_RECTS = 4;
@@ -29,7 +41,7 @@ const toScreen = (
   };
 };
 
-export const BlobTrackingAnimation = ({ mesh, liveMeshRef }: Props) => {
+export const BlobTrackingAnimation = ({ mesh, index, liveMeshRef }: Props) => {
   const { camera, gl } = useThree();
 
   const divRefs = useRef<HTMLDivElement[]>([]);
@@ -63,9 +75,19 @@ export const BlobTrackingAnimation = ({ mesh, liveMeshRef }: Props) => {
         "absolute border border-primary pointer-events-none hidden box-border";
 
       // 座標表示用ラベルをボックス左下に配置
+      const coord = document.createElement("span");
+
+      coord.className =
+        "absolute left-0 top-full font-mono text-xs text-primary whitespace-nowrap";
+
+      div.appendChild(coord);
+
+      // 座標表示用ラベルをボックス左下に配置
       const label = document.createElement("span");
+
       label.className =
-        "absolute left-0 top-full font-mono text-[10px] text-primary whitespace-nowrap";
+        "absolute right-0 bottom-full font-mono text-xs text-secondary whitespace-nowrap bg-primary";
+
       div.appendChild(label);
 
       parent.appendChild(div);
@@ -90,7 +112,7 @@ export const BlobTrackingAnimation = ({ mesh, liveMeshRef }: Props) => {
     // 一定フレームごとにランダムな頂点ペアを再抽選
     if (s.frameCount >= s.nextUpdate) {
       // 次の更新は100～110フレーム後に設定
-      s.nextUpdate = s.frameCount + Math.floor(Math.random() * 10) + 100;
+      s.nextUpdate = s.frameCount + Math.floor(Math.random() * 10) + 1;
 
       s.count = Math.floor(Math.random() * MAX_RECTS) + 1;
 
@@ -142,8 +164,13 @@ export const BlobTrackingAnimation = ({ mesh, liveMeshRef }: Props) => {
       div.style.height = `${Math.abs(sb.y - sa.y)}px`;
 
       // ボックス左下に座標を表示
-      const label = div.querySelector("span");
-      if (label) label.textContent = `x:${left.toFixed(0)} y:${top.toFixed(0)}`;
+      const coord = div.querySelector("span");
+      if (coord) coord.textContent = `x:${left.toFixed(0)} y:${top.toFixed(0)}`;
+
+      // ボックス左下にラベルを表示
+      const label = div.querySelectorAll("span")[1];
+      const hashed = idxA + idxB;
+      if (label) label.textContent = `${labels[index]}:${hashed}`;
     });
   });
 
