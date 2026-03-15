@@ -71,20 +71,35 @@ export const BlobTrackingAnimation = ({ mesh, index, liveMeshRef }: Props) => {
     divRefs.current = Array.from({ length: MAX_RECTS }, () => {
       const div = document.createElement("div");
 
+      // 斜線背景＋ボーダー
       div.className =
-        "absolute border border-primary pointer-events-none hidden box-border";
+        "absolute border-[0.5px] border-muted-foreground pointer-events-none hidden box-border";
+      div.style.backgroundImage =
+        "repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(180,180,180,0.2) 3px, rgba(180,180,180,0.2) 4px)";
 
-      // 座標表示用ラベルをボックス左下に配置
+      // 4隅に+マークを配置
+      const corners: [string, string][] = [
+        ["-translate-x-1/2 -translate-y-1/2", "left-0 top-0"],
+        ["translate-x-1/2 -translate-y-1/2", "right-0 top-0"],
+        ["-translate-x-1/2 translate-y-1/2", "left-0 bottom-0"],
+        ["translate-x-1/2 translate-y-1/2", "right-0 bottom-0"],
+      ];
+      corners.forEach(([transform, pos]) => {
+        const c = document.createElement("span");
+        c.className = `absolute ${pos} ${transform} font-mono font-bold text-lg text-muted-foreground leading-none`;
+        c.textContent = "+";
+        div.appendChild(c);
+      });
+
+      // 座標ラベル（左下）
       const coord = document.createElement("span");
-
       coord.className =
         "absolute left-0 top-full font-mono text-xs text-primary whitespace-nowrap";
 
       div.appendChild(coord);
 
-      // 座標表示用ラベルをボックス左下に配置
+      // ラベル（右上）
       const label = document.createElement("span");
-
       label.className =
         "absolute right-0 bottom-full font-mono text-xs text-secondary whitespace-nowrap bg-primary";
 
@@ -163,12 +178,12 @@ export const BlobTrackingAnimation = ({ mesh, index, liveMeshRef }: Props) => {
       div.style.width = `${Math.abs(sb.x - sa.x)}px`;
       div.style.height = `${Math.abs(sb.y - sa.y)}px`;
 
-      // ボックス左下に座標を表示
-      const coord = div.querySelector("span");
+      // ボックス左下に座標を表示（span[4]: 4隅の+の後）
+      const coord = div.querySelectorAll("span")[4];
       if (coord) coord.textContent = `x:${left.toFixed(0)} y:${top.toFixed(0)}`;
 
-      // ボックス左下にラベルを表示
-      const label = div.querySelectorAll("span")[1];
+      // ボックス右上にラベルを表示（span[5]）
+      const label = div.querySelectorAll("span")[5];
       const hashed = idxA + idxB;
       if (label) label.textContent = `${labels[index]}:${hashed}`;
     });
