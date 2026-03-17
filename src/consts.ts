@@ -74,7 +74,7 @@ export const BlOB_TRACKING_ClASS = {
     "absolute right-0 bottom-full font-mono text-xs text-secondary whitespace-nowrap bg-primary",
   // 座標
   coord:
-    "absolute left-0 top-full font-mono text-xs text-primary whitespace-nowrap",
+    "dark:mix-blend-difference absolute left-0 top-full font-mono text-xs text-primary whitespace-nowrap",
   // +記号
   plus: "absolute font-mono text-lg leading-none font-bold text-muted-foreground",
 };
