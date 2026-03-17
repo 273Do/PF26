@@ -25,8 +25,8 @@ export const LogoCanvas = () => {
         {/* <gridHelper />
         <axesHelper args={[5]} /> */}
         <Suspense fallback={null}>
-          {/* <OrbitControls enableZoom={false} enablePan={false} /> */}
-          <OrbitControls />
+          <OrbitControls enableZoom={false} enablePan={false} />
+          {/* <OrbitControls /> */}
           <Models />
           <EnvironmentLight />
           <PostProcess />

@@ -51,7 +51,7 @@ export const COPYRIGHT_THIS_YEAR = Number(
 );
 
 // 3Dモデルに同時に表示するオーバーレイrectの最大数
-export const MAX_RECTS = 4;
+export const MAX_RECTS = 5;
 
 // オーバーレイrectの+記号の座標
 export const CORNER_POSITIONS: [string, string][] = [
