@@ -98,6 +98,10 @@ export const BlobTrackingAnimation = ({
   const divRefs = useRef<OverlayDiv[]>([]);
   const bboxRef = useRef<OverlayDiv | null>(null);
 
+  // box同士を繋ぐSVG line要素
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const lineRefs = useRef<SVGLineElement[]>([]);
+
   const state = useRef({
     positions: [] as THREE.Vector3[],
     frameCount: 0,
@@ -132,12 +136,37 @@ export const BlobTrackingAnimation = ({
     parent.appendChild(bbox.el);
     bboxRef.current = bbox;
 
+    // box同士を繋ぐSVG（MAX_RECTS - 1本の線）
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute(
+      "class",
+      "absolute inset-0 w-full h-full pointer-events-none overflow-visible",
+    );
+    parent.appendChild(svg);
+    svgRef.current = svg;
+
+    lineRefs.current = Array.from({ length: MAX_RECTS - 1 }, () => {
+      const line = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "line",
+      );
+      line.setAttribute("stroke", "currentColor");
+      line.setAttribute("stroke-width", "0.5");
+      line.setAttribute("stroke-dasharray", "4 4");
+      line.setAttribute("class", "text-muted-foreground hidden");
+      svg.appendChild(line);
+      return line;
+    });
+
     // クリーンアップ時に削除
     return () => {
       divRefs.current.forEach((o) => o.el.remove());
       divRefs.current = [];
       bbox.el.remove();
       bboxRef.current = null;
+      svg.remove();
+      svgRef.current = null;
+      lineRefs.current = [];
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gl, mesh]);
@@ -207,9 +236,30 @@ export const BlobTrackingAnimation = ({
       overlay.coord.textContent = `x:${left.toFixed(0)} y:${top.toFixed(0)}`;
 
       const hashed = idxA + idxB;
-      // const text = mesh.name[0].toUpperCase() + mesh.name.slice(1);
       const text = linkTitle[0].toUpperCase() + linkTitle.slice(1);
       overlay.label.textContent = `${text}:${hashed}`;
+    });
+
+    // 表示中のbox同士を中央座標で線で繋ぐ
+    lineRefs.current.forEach((line, i) => {
+      if (i >= s.count - 1) {
+        line.classList.add("hidden");
+        return;
+      }
+      const a = divRefs.current[i];
+      const b = divRefs.current[i + 1];
+      if (!a || !b) return;
+
+      const ax = parseFloat(a.el.style.left) + parseFloat(a.el.style.width) / 2;
+      const ay = parseFloat(a.el.style.top) + parseFloat(a.el.style.height) / 2;
+      const bx = parseFloat(b.el.style.left) + parseFloat(b.el.style.width) / 2;
+      const by = parseFloat(b.el.style.top) + parseFloat(b.el.style.height) / 2;
+
+      line.classList.remove("hidden");
+      line.setAttribute("x1", `${ax}`);
+      line.setAttribute("y1", `${ay}`);
+      line.setAttribute("x2", `${bx}`);
+      line.setAttribute("y2", `${by}`);
     });
 
     // ホバー時にBoundingBboxをスクリーン座標で表示
