@@ -26,6 +26,7 @@ export const IconMarquee = ({ iconNameList, className }: Props) => {
       )}
       fade={true}
       direction="left"
+      numberOfCopies={10}
     >
       {iconNameList.map((icon) => {
         const iconKey = `Si${icon}` as keyof typeof Icons;

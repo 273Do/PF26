@@ -1,4 +1,4 @@
-import { memo, useRef } from "react";
+import { memo, useRef, useState } from "react";
 import type { RefObject } from "react";
 
 import { RigidBody } from "@react-three/rapier";
@@ -28,7 +28,7 @@ type Props = {
 const SplitModelInner = ({ mesh, index, frameRef }: Props) => {
   const { href, title } = PAGE_LINKS[PAGE_LINKS.length - index - 1];
 
-  console.log(href, title);
+  const [hovered, setHovered] = useState<boolean>(false);
 
   const { trigger, isSupported } = useWebHaptics();
   // 物理演算で動く実際のmeshオブジェクトのref
@@ -49,13 +49,29 @@ const SplitModelInner = ({ mesh, index, frameRef }: Props) => {
         geometry={(mesh as THREE.Mesh).geometry}
         castShadow
         receiveShadow
+        onClick={() =>
+          import("astro:transitions/client").then(({ navigate }) =>
+            navigate(href),
+          )
+        }
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          document.body.style.cursor = "pointer";
+          setHovered(true);
+        }}
+        onPointerOut={(e) => {
+          e.stopPropagation();
+          document.body.style.cursor = "auto";
+          setHovered(false);
+        }}
       >
         <Material />
         {/* meshRefが確定した後に動くmeshを渡す */}
         <BlobTrackingAnimation
           mesh={mesh}
+          hovered={hovered}
           liveMeshRef={meshRef}
-          index={index}
+          linkTitle={title}
         />
       </mesh>
       {/* <RoutingBox geometry={(mesh as THREE.Mesh).geometry} /> */}

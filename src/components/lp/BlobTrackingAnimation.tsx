@@ -4,26 +4,27 @@ import type { RefObject } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
+import { BlOB_TRACKING_ClASS, CORNER_POSITIONS, MAX_RECTS } from "@/consts";
+import { cn } from "@/lib/utils";
+
 type Props = {
   /**
    * モデルのメッシュ
    */
   mesh: THREE.Object3D;
   /**
-   * ルーティング配列の番号
+   * ホバーしているかどうか
    */
-  index: number;
+  hovered: boolean;
   /**
    * 物理演算で実際に動いているThree.js meshのref
    */
   liveMeshRef: RefObject<THREE.Mesh | null>;
+  /**
+   * 遷移リンクタイトル
+   */
+  linkTitle: string;
 };
-
-// ラベルのリスト
-const labels = ["Asterisk", "Three", "Seven", "Two"];
-
-// 同時に表示するオーバーレイrectの最大数
-const MAX_RECTS = 4;
 
 // ワールド座標をスクリーン座標に変換する
 const toScreen = (
@@ -41,10 +42,61 @@ const toScreen = (
   };
 };
 
-export const BlobTrackingAnimation = ({ mesh, index, liveMeshRef }: Props) => {
+type OverlayDiv = {
+  /**
+   * オーバーレイdiv要素
+   */
+  el: HTMLDivElement;
+  /**
+   * 座標表示用span要素
+   */
+  coord: HTMLSpanElement;
+  /**
+   * ラベル表示用span要素
+   */
+  label: HTMLSpanElement;
+};
+
+const createOverlayDiv = (border: string, diagonalLine: string): OverlayDiv => {
+  const el = document.createElement("div");
+  el.className = border;
+  el.style.backgroundImage = diagonalLine;
+
+  const { label: labelStyle, coord: coordStyle, plus } = BlOB_TRACKING_ClASS;
+
+  // 4隅の+記号を生成
+  CORNER_POSITIONS.forEach(([transform, pos]) => {
+    const c = document.createElement("span");
+    c.className = cn(plus, pos, transform);
+    c.textContent = "+";
+    el.appendChild(c);
+  });
+
+  const coord = document.createElement("span");
+  coord.className = coordStyle;
+  el.appendChild(coord);
+
+  // ラベルはオプション（bounding box用divには表示しない）
+  const label = document.createElement("span");
+  label.className = labelStyle;
+  el.appendChild(label);
+
+  return { el, coord, label };
+};
+
+export const BlobTrackingAnimation = ({
+  mesh,
+  hovered,
+  liveMeshRef,
+  linkTitle,
+}: Props) => {
   const { camera, gl } = useThree();
 
-  const divRefs = useRef<HTMLDivElement[]>([]);
+  const { border, diagonalLine } = BlOB_TRACKING_ClASS;
+
+  // divRefs: el + coord + label の参照をキャッシュ
+  const divRefs = useRef<OverlayDiv[]>([]);
+  const bboxRef = useRef<OverlayDiv | null>(null);
 
   const state = useRef({
     positions: [] as THREE.Vector3[],
@@ -68,53 +120,26 @@ export const BlobTrackingAnimation = ({ mesh, index, liveMeshRef }: Props) => {
 
     if (!parent) return;
 
+    // BlobTracking表示用div
     divRefs.current = Array.from({ length: MAX_RECTS }, () => {
-      const div = document.createElement("div");
-
-      // 斜線背景＋ボーダー
-      div.className =
-        "absolute border-[0.5px] border-muted-foreground pointer-events-none hidden box-border";
-      div.style.backgroundImage =
-        "repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(180,180,180,0.2) 3px, rgba(180,180,180,0.2) 4px)";
-
-      // 4隅に+マークを配置
-      const corners: [string, string][] = [
-        ["-translate-x-1/2 -translate-y-1/2", "left-0 top-0"],
-        ["translate-x-1/2 -translate-y-1/2", "right-0 top-0"],
-        ["-translate-x-1/2 translate-y-1/2", "left-0 bottom-0"],
-        ["translate-x-1/2 translate-y-1/2", "right-0 bottom-0"],
-      ];
-      corners.forEach(([transform, pos]) => {
-        const c = document.createElement("span");
-        c.className = `absolute ${pos} ${transform} font-mono font-bold text-lg text-muted-foreground leading-none`;
-        c.textContent = "+";
-        div.appendChild(c);
-      });
-
-      // 座標ラベル（左下）
-      const coord = document.createElement("span");
-      coord.className =
-        "absolute left-0 top-full font-mono text-xs text-primary whitespace-nowrap";
-
-      div.appendChild(coord);
-
-      // ラベル（右上）
-      const label = document.createElement("span");
-      label.className =
-        "absolute right-0 bottom-full font-mono text-xs text-secondary whitespace-nowrap bg-primary";
-
-      div.appendChild(label);
-
-      parent.appendChild(div);
-
-      return div;
+      const overlay = createOverlayDiv(border, diagonalLine);
+      parent.appendChild(overlay.el);
+      return overlay;
     });
 
-    // クリーンアップ時にdivを削除
+    // BoundingBox表示用div
+    const bbox = createOverlayDiv(border, diagonalLine);
+    parent.appendChild(bbox.el);
+    bboxRef.current = bbox;
+
+    // クリーンアップ時に削除
     return () => {
-      divRefs.current.forEach((d) => d.remove());
+      divRefs.current.forEach((o) => o.el.remove());
       divRefs.current = [];
+      bbox.el.remove();
+      bboxRef.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gl, mesh]);
 
   useFrame(() => {
@@ -124,6 +149,7 @@ export const BlobTrackingAnimation = ({ mesh, index, liveMeshRef }: Props) => {
 
     s.frameCount++;
 
+    // BlobTracking表示用の頂点ペアを一定フレームごとにランダムに更新
     // 一定フレームごとにランダムな頂点ペアを再抽選
     if (s.frameCount >= s.nextUpdate) {
       // 次の更新は100～110フレーム後に設定
@@ -148,10 +174,10 @@ export const BlobTrackingAnimation = ({ mesh, index, liveMeshRef }: Props) => {
     const w = gl.domElement.clientWidth;
     const h = gl.domElement.clientHeight;
 
-    // 各rectを2頂点のスクリーン座標から計算したバウンディングボックスで配置
-    divRefs.current.forEach((div, r) => {
+    // BlobTracking：各rectを2頂点のスクリーン座標から計算したバウンディングボックスで配置
+    divRefs.current.forEach((overlay, r) => {
       if (r >= s.count) {
-        div.classList.add("hidden");
+        overlay.el.classList.add("hidden");
         return;
       }
       const [idxA, idxB] = s.pairs[r];
@@ -172,21 +198,52 @@ export const BlobTrackingAnimation = ({ mesh, index, liveMeshRef }: Props) => {
       const left = Math.min(sa.x, sb.x);
       const top = Math.min(sa.y, sb.y);
 
-      div.classList.remove("hidden");
-      div.style.left = `${left}px`;
-      div.style.top = `${top}px`;
-      div.style.width = `${Math.abs(sb.x - sa.x)}px`;
-      div.style.height = `${Math.abs(sb.y - sa.y)}px`;
+      overlay.el.classList.remove("hidden");
+      overlay.el.style.left = `${left}px`;
+      overlay.el.style.top = `${top}px`;
+      overlay.el.style.width = `${Math.abs(sb.x - sa.x)}px`;
+      overlay.el.style.height = `${Math.abs(sb.y - sa.y)}px`;
 
-      // ボックス左下に座標を表示（span[4]: 4隅の+の後）
-      const coord = div.querySelectorAll("span")[4];
-      if (coord) coord.textContent = `x:${left.toFixed(0)} y:${top.toFixed(0)}`;
+      overlay.coord.textContent = `x:${left.toFixed(0)} y:${top.toFixed(0)}`;
 
-      // ボックス右上にラベルを表示（span[5]）
-      const label = div.querySelectorAll("span")[5];
       const hashed = idxA + idxB;
-      if (label) label.textContent = `${labels[index]}:${hashed}`;
+      // const text = mesh.name[0].toUpperCase() + mesh.name.slice(1);
+      const text = linkTitle[0].toUpperCase() + linkTitle.slice(1);
+      overlay.label.textContent = `${text}:${hashed}`;
     });
+
+    // ホバー時にBoundingBboxをスクリーン座標で表示
+    const bbox = bboxRef.current;
+    if (bbox) {
+      if (hovered) {
+        // geometry の全頂点をワールド座標に変換してスクリーン座標に投影し、1パスでmin/maxを計算
+        let minX = Infinity,
+          minY = Infinity,
+          maxX = -Infinity,
+          maxY = -Infinity;
+
+        s.positions.forEach((p) => {
+          const sp = toScreen(p.clone().applyMatrix4(mw), camera, w, h);
+          if (sp.x < minX) minX = sp.x;
+          if (sp.y < minY) minY = sp.y;
+          if (sp.x > maxX) maxX = sp.x;
+          if (sp.y > maxY) maxY = sp.y;
+        });
+
+        bbox.el.classList.remove("hidden");
+        bbox.el.style.left = `${minX}px`;
+        bbox.el.style.top = `${minY}px`;
+        bbox.el.style.width = `${maxX - minX}px`;
+        bbox.el.style.height = `${maxY - minY}px`;
+
+        bbox.coord.textContent = `x:${minX.toFixed(0)} y:${minY.toFixed(0)}`;
+
+        const text = linkTitle[0].toUpperCase() + linkTitle.slice(1);
+        bbox.label.textContent = text;
+      } else {
+        bbox.el.classList.add("hidden");
+      }
+    }
   });
 
   return null;
