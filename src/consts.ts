@@ -25,16 +25,16 @@ const KOFI_LINK = import.meta.env.PUBLIC_KOFI_LINK;
 export const SNS_LINKS = [
   { title: "GitHub", href: GITHUB_LINK || "" },
   { title: "Discord", href: DISCORD_LINK || "" },
+  { title: "Note", href: NOTE_LINK || "" },
+];
+
+export const CONTACT_SNS_LINKS = [
+  { title: "Qiita", href: QIITA_LINK || "" },
+  { title: "X (Twitter)", href: X_LINK || "" },
   {
     title: "YouTube",
     href: YOUTUBE_LINK || "",
   },
-];
-
-export const CONTACT_SNS_LINKS = [
-  { title: "X (Twitter)", href: X_LINK || "" },
-  { title: "Qiita", href: QIITA_LINK || "" },
-  { title: "Note", href: NOTE_LINK || "" },
 ];
 
 export const SUPPORT_LINKS = [

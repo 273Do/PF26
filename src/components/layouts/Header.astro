@@ -1,11 +1,9 @@
 ---
 import { Image } from "astro:assets";
-import { Languages } from "lucide-react";
 
 import { ThemeToggle } from "../ThemeToggle";
 import { MobilePageNavigation } from "./MobilePageNavigation";
 import PageNavigation from "./PageNavigation.astro";
-import { Button } from "../ui/button";
 
 import { fetchWorks } from "@/lib/fetchContents";
 
@@ -36,9 +34,6 @@ const { count: worksCount } = await fetchWorks();
     client:load
   />
   <div class="hidden sm:flex">
-    <Button variant="ghost" size="icon-sm" className="cursor-pointer">
-      <Languages className="size-4" />
-    </Button>
     <ThemeToggle client:load />
   </div>
 </header>

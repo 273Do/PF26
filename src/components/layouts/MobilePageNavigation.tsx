@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Languages, MenuIcon, X } from "lucide-react";
+import { MenuIcon, X } from "lucide-react";
 
 import { ThemeToggle } from "../ThemeToggle";
 import Copyright from "./Copyright";
@@ -74,12 +74,7 @@ export const MobilePageNavigation = ({ currentPath, worksCount }: Props) => {
             )}
         </ul>
         <div className="flex items-center justify-between">
-          <div>
-            <Button variant="ghost" size="icon-sm" className="cursor-pointer">
-              <Languages className="size-4" />
-            </Button>
-            <ThemeToggle />
-          </div>
+          <ThemeToggle />
           <Copyright />
         </div>
       </div>
