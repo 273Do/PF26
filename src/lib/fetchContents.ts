@@ -30,6 +30,10 @@ export const fetchWork = async (documentId: string) => {
   const workDetails = await fetchApi<WorkObj>({
     endpoint: `works/${documentId}`,
     wrappedByKey: "data",
+    query: {
+      "populate[tags][populate]": "*",
+      "populate[technologies][populate]": "*",
+    },
   });
 
   return { workDetails };

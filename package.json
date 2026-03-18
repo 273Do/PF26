@@ -21,11 +21,17 @@
     "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
+    "@devnomic/marquee": "^1.0.3",
     "@icons-pack/react-simple-icons": "^13.12.0",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@react-three/postprocessing": "^3.0.4",
+    "@react-three/rapier": "^2.2.0",
     "@tailwindcss/vite": "^4.2.1",
     "@types/canvas-confetti": "^1.9.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/three": "^0.183.1",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
     "astro": "^5.17.1",
@@ -51,7 +57,9 @@
     "sharp": "^0.34.3",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3"
+    "three": "^0.183.2",
+    "typescript": "^5.9.3",
+    "web-haptics": "^0.0.6"
   },
   "devDependencies": {
     "prettier": "3.8.1",

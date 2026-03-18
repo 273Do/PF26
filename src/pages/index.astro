@@ -1,6 +1,7 @@
 ---
 import TextReveal from "@/components/animations/TextReveal.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
+import { LogoCanvas } from "@/components/lp/LogoCanvas";
 ---
 
 <!doctype html>
@@ -12,8 +13,8 @@ import Layouts from "@/components/layouts/Layouts.astro";
       <!-- <Suspense fallback={(<p>loading now</p>)}>
       <LogoThree />
       </Suspense> -->
-      <!-- <p>loading</p> -->
       <div class="w-full">
+        <LogoCanvas client:load />
         <TextReveal
           text="PORTFOLIO"
           class="translate-y-2 leading-none font-semibold md:translate-y-4 lg:translate-y-5.5"

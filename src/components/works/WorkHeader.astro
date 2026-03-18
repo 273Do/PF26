@@ -101,7 +101,11 @@ const backHref = `/${worksHref}`;
     <div class="flex gap-3">
       {
         tags?.map(({ documentId, name }) => (
-          <Badge key={documentId} variant="secondary">
+          <Badge
+            key={documentId}
+            variant="secondary"
+            className="rounded-none p-0"
+          >
             {name}
           </Badge>
         ))

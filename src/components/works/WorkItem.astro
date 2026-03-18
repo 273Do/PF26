@@ -20,7 +20,8 @@ const { documentId, title, description, tags, releaseDate } = Astro.props;
 
 <a href={`/${worksHref}/${documentId}`}>
   <div
-    class="flex cursor-pointer flex-col gap-1 py-3 duration-200 hover:bg-primary-foreground sm:px-3"
+    id="workItem"
+    class="flex cursor-pointer flex-col gap-1 py-2 duration-200 sm:px-3"
   >
     <p class="text-2xl font-semibold">{title}</p>
     <p class="text-muted-foreground">{description}</p>
@@ -28,7 +29,9 @@ const { documentId, title, description, tags, releaseDate } = Astro.props;
       <div class="flex gap-3">
         {
           (tags as Tag[])?.map((tag) => (
-            <Badge variant="secondary">{tag.name}</Badge>
+            <Badge variant="secondary" className="rounded-none p-0">
+              {tag.name}
+            </Badge>
           ))
         }
       </div>
@@ -39,3 +42,15 @@ const { documentId, title, description, tags, releaseDate } = Astro.props;
   </div>
   <Separator />
 </a>
+
+<style>
+  #workItem:hover {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 3px,
+      rgba(180, 180, 180, 0.2) 3px,
+      rgba(180, 180, 180, 0.2) 4px
+    );
+  }
+</style>
