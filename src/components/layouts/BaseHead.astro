@@ -4,6 +4,7 @@
 import "../../styles/global.css";
 import { SEO } from "astro-seo";
 
+import JsonLd from "@/components/layouts/JsonLd.astro";
 import { SITE_TITLE } from "@/consts";
 
 interface Props {
@@ -61,3 +62,5 @@ const imageUrl = new URL(image, Astro.url).toString();
     imageAlt: title,
   }}
 />
+<JsonLd type="website" />
+<JsonLd type="person" />

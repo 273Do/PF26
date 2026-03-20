@@ -1,0 +1,76 @@
+---
+import {
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  SNS_LINKS,
+  MAIL_ADDRESS,
+} from "@/consts";
+
+interface Props {
+  type: "website" | "person" | "webpage";
+}
+
+const { type } = Astro.props;
+
+const siteUrl = Astro.site?.toString();
+
+// WebSiteスキーマ
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  url: siteUrl,
+  inLanguage: "ja-JP",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${siteUrl}/search?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
+
+// Personスキーマ
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "273*",
+  url: siteUrl,
+  email: MAIL_ADDRESS,
+  sameAs: SNS_LINKS.filter((link) => link.href).map((link) => link.href),
+  description: SITE_DESCRIPTION,
+};
+
+// WebPageスキーマ
+const webpageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  url: siteUrl,
+  inLanguage: "ja-JP",
+  isPartOf: {
+    "@type": "WebSite",
+    name: SITE_TITLE,
+    url: siteUrl,
+  },
+};
+
+const getSchema = () => {
+  switch (type) {
+    case "person":
+      return personSchema;
+    case "webpage":
+      return webpageSchema;
+    case "website":
+    default:
+      return websiteSchema;
+  }
+};
+
+const schema = getSchema();
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
