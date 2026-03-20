@@ -14,13 +14,13 @@ export const PAGE_LINKS = [
 ] as const;
 
 // snsリンクとタイトル
-const GITHUB_LINK = import.meta.env.PUBLIC_GITHUB_LINK;
-const DISCORD_LINK = import.meta.env.PUBLIC_DISCORD_LINK;
-const YOUTUBE_LINK = import.meta.env.PUBLIC_YOUTUBE_LINK;
-const X_LINK = import.meta.env.PUBLIC_X_LINK;
-const QIITA_LINK = import.meta.env.PUBLIC_QIITA_LINK;
-const NOTE_LINK = import.meta.env.PUBLIC_NOTE_LINK;
-const KOFI_LINK = import.meta.env.PUBLIC_KOFI_LINK;
+const GITHUB_LINK = process.env.PUBLIC_GITHUB_LINK;
+const DISCORD_LINK = process.env.PUBLIC_DISCORD_LINK;
+const YOUTUBE_LINK = process.env.PUBLIC_YOUTUBE_LINK;
+const X_LINK = process.env.PUBLIC_X_LINK;
+const QIITA_LINK = process.env.PUBLIC_QIITA_LINK;
+const NOTE_LINK = process.env.PUBLIC_NOTE_LINK;
+const KOFI_LINK = process.env.PUBLIC_KOFI_LINK;
 
 export const SNS_LINKS = [
   { title: "GitHub", href: GITHUB_LINK || "" },
@@ -44,10 +44,10 @@ export const SUPPORT_LINKS = [
   },
 ];
 
-export const MAIL_ADDRESS = import.meta.env.MAIL_ADDRESS;
+export const MAIL_ADDRESS = process.env.MAIL_ADDRESS;
 
 export const COPYRIGHT_THIS_YEAR = Number(
-  import.meta.env.PUBLIC_COPYRIGHT_THIS_YEAR,
+  process.env.PUBLIC_COPYRIGHT_THIS_YEAR,
 );
 
 // 3Dモデルに同時に表示するオーバーレイrectの最大数
