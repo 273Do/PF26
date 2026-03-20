@@ -31,7 +31,12 @@ export default async function fetchApi<T>({
       .join("&");
     urlStr += `?${qs}`;
   }
-  const res = await fetch(urlStr);
+  const headers: HeadersInit = {};
+
+  // Add Authorization header if STRAPI_API_TOKEN is set
+  headers.Authorization = `Bearer ${import.meta.env.STRAPI_API_TOKEN}`;
+
+  const res = await fetch(urlStr, { headers });
   let data = await res.json();
 
   if (wrappedByKey) {
