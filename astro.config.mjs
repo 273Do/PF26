@@ -10,7 +10,7 @@ import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
-  site: process.env.SITE_URL,
+  site: process.env.URL || process.env.LOCAL_URL,
   integrations: [mdx(), sitemap(), react()],
 
   vite: {
