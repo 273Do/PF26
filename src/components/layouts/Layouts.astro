@@ -12,6 +12,10 @@ const pathname = Astro.url.pathname
   .split("/")[0];
 
 const hasHeaderOffset = pathname === "" || pathname === "contact";
+
+const section =
+  pathname && `| ${pathname[0].toUpperCase() + pathname.slice(1)}`;
+const title = `${SITE_TITLE} ${section}`;
 ---
 
 <script is:inline>
@@ -29,7 +33,11 @@ const hasHeaderOffset = pathname === "" || pathname === "contact";
 
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead
+      title={title}
+      description={SITE_DESCRIPTION}
+      image={"imgs/opengraph-image.png"}
+    />
     <ClientRouter />
   </head>
   <body
