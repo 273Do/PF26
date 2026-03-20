@@ -13,11 +13,12 @@ interface Props {
   image: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const siteUrl = Astro.site || new URL("http://localhost:4321");
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
 
 const { title, description, image } = Astro.props;
 
-const imageUrl = new URL(image, Astro.url).toString();
+const imageUrl = new URL(image, siteUrl).toString();
 ---
 
 <!-- Global Metadata -->
@@ -30,7 +31,7 @@ const imageUrl = new URL(image, Astro.url).toString();
   rel="alternate"
   type="application/rss+xml"
   title={SITE_TITLE}
-  href={new URL("rss.xml", Astro.site)}
+  href={new URL("rss.xml", siteUrl)}
 />
 <meta name="generator" content={Astro.generator} />
 

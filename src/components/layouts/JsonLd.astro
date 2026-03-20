@@ -12,7 +12,7 @@ interface Props {
 
 const { type } = Astro.props;
 
-const siteUrl = Astro.site?.toString();
+const siteUrl = Astro.site?.toString() || "http://localhost:4321";
 
 // WebSiteスキーマ
 const websiteSchema = {
