@@ -2,8 +2,9 @@
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 
-import { PAGE_LINKS } from "@/consts";
+import { CORNER_POSITIONS, PAGE_LINKS } from "@/consts";
 import type { WorkObj } from "@/lib/fetchContents";
+import { cn } from "@/lib/utils";
 
 type Props = Pick<
   WorkObj,
@@ -21,8 +22,24 @@ const { documentId, title, description, tags, releaseDate } = Astro.props;
 <a href={`/${worksHref}/${documentId}`}>
   <div
     id="workItem"
-    class="flex cursor-pointer flex-col gap-1 py-2 duration-200 sm:px-3"
+    class="group relative z-0 flex cursor-pointer flex-col gap-1 py-2 duration-200 sm:px-3"
   >
+    {
+      CORNER_POSITIONS.map(([transform, pos]) => (
+        <span
+          class={cn(
+            pos,
+            transform,
+            `
+              absolute font-mono text-base leading-none font-bold text-muted-foreground opacity-0
+              group-hover:opacity-100
+            `,
+          )}
+        >
+          +
+        </span>
+      ))
+    }
     <p class="text-2xl font-semibold">{title}</p>
     <p class="text-muted-foreground">{description}</p>
     <div class="flex items-center justify-between">
