@@ -4,22 +4,19 @@ import Layouts from "@/components/layouts/Layouts.astro";
 import { LogoCanvas } from "@/components/lp/LogoCanvas";
 ---
 
-<!doctype html>
-<html lang="ja">
-  <Layouts>
-    <div
-      class="flex h-[calc(100dvh-36px)] w-full items-end justify-center overflow-hidden"
-    >
-      <!-- <Suspense fallback={(<p>loading now</p>)}>
-      <LogoThree />
-      </Suspense> -->
-      <div class="w-full">
-        <LogoCanvas client:load />
-        <TextReveal
-          text="PORTFOLIO"
-          class="translate-y-2 leading-none font-semibold md:translate-y-4 lg:translate-y-5.5"
-        />
-      </div>
+<Layouts>
+  <div
+    class="flex h-[calc(100dvh-36px)] w-full items-end justify-center overflow-hidden"
+  >
+    <!-- <Suspense fallback={(<p>loading now</p>)}>
+    <LogoThree />
+    </Suspense> -->
+    <div class="w-full">
+      <LogoCanvas client:load />
+      <TextReveal
+        text="PORTFOLIO"
+        class="translate-y-2 leading-none font-semibold md:translate-y-4 lg:translate-y-5.5"
+      />
     </div>
-  </Layouts>
-</html>
+  </div>
+</Layouts>
