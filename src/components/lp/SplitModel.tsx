@@ -1,5 +1,4 @@
 import { memo, useRef, useState } from "react";
-import type { RefObject } from "react";
 
 import { RigidBody } from "@react-three/rapier";
 import type * as THREE from "three";
@@ -19,13 +18,9 @@ type Props = {
    * ルーティング配列の番号
    */
   index: number;
-  /**
-   * フレーム数を保持するRef
-   */
-  frameRef: RefObject<number>;
 };
 
-const SplitModelInner = ({ mesh, index, frameRef }: Props) => {
+const SplitModelInner = ({ mesh, index }: Props) => {
   const { href, title } = PAGE_LINKS[PAGE_LINKS.length - index - 1];
 
   const [hovered, setHovered] = useState<boolean>(false);
@@ -40,9 +35,7 @@ const SplitModelInner = ({ mesh, index, frameRef }: Props) => {
       ccd
       friction={1}
       restitution={0.9}
-      onCollisionEnter={() =>
-        frameRef.current <= 1500 && isSupported && trigger()
-      }
+      onCollisionEnter={() => isSupported && trigger()}
     >
       <mesh
         ref={meshRef}

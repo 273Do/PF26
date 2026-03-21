@@ -66,7 +66,7 @@ export const MobilePageNavigation = ({ currentPath, worksCount }: Props) => {
                       className="flex"
                     >
                       <p className="hover:underline">{title}</p>
-                      {count && <p className="text-sm">({count})</p>}
+                      {Boolean(count) && <p className="text-sm">({count})</p>}
                     </a>
                   </li>
                 );

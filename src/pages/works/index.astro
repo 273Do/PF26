@@ -1,32 +1,39 @@
 ---
 import Blinking from "@/components/animations/Blinking.astro";
 import TextReveal from "@/components/animations/TextReveal.astro";
+import ErrorContent from "@/components/layouts/ErrorContent.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
 import WorkList from "@/components/works/WorkList.astro";
 import { fetchWorks } from "@/lib/fetchContents";
 
 const { works, count } = await fetchWorks();
+
+const hasError = !works;
+if (hasError) {
+  Astro.response.status = 500;
+}
 ---
 
-<!doctype html>
-<html lang="ja">
-  <Layouts>
-    <div class="block w-full items-start justify-end sm:flex">
-      <div class="block h-[3vh] sm:hidden"></div>
-      <div class="left-6 flex w-3/5 sm:fixed sm:block sm:w-2/5 md:space-y-3">
-        <TextReveal
-          text="Works"
-          class="leading-none font-semibold md:translate-y-4 lg:translate-y-6"
-        />
-        <Blinking>
-          <p
-            class="text-end text-3xl font-semibold text-muted-foreground sm:text-5xl"
-          >
-            ({count})
-          </p>
-        </Blinking>
+<Layouts>
+  {
+    hasError ? (
+      <ErrorContent statusCode={500} />
+    ) : (
+      <div class="block w-full items-start justify-end sm:flex">
+        <div class="block h-[3vh] sm:hidden" />
+        <div class="left-6 flex w-3/5 sm:fixed sm:block sm:w-2/5 md:space-y-3">
+          <TextReveal
+            text="Works"
+            class="leading-none font-semibold md:translate-y-4 lg:translate-y-6"
+          />
+          <Blinking>
+            <p class="text-end text-3xl font-semibold text-muted-foreground sm:text-5xl">
+              ({count})
+            </p>
+          </Blinking>
+        </div>
+        <WorkList works={works} />
       </div>
-      <WorkList works={works} />
-    </div>
-  </Layouts>
-</html>
+    )
+  }
+</Layouts>

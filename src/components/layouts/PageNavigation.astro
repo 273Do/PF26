@@ -38,7 +38,7 @@ const counts: Record<string, number> = {
               <li class={cn(isActive && "text-foreground")}>
                 <a href={`/${href}`} class="flex">
                   <p class="hover:underline">{title}</p>
-                  {count && <p class="text-[10px]">({count})</p>}
+                  {Boolean(count) && <p class="text-[10px]">({count})</p>}
                 </a>
               </li>
             </Blinking>

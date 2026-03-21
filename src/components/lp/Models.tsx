@@ -52,9 +52,7 @@ export const Models = () => {
         {Object.entries(nodes)
           .filter(([_, obj]) => obj.type === "Mesh")
           .map(([key, mesh], i) => {
-            return (
-              <SplitModel key={key} mesh={mesh} index={i} frameRef={frameRef} />
-            );
+            return <SplitModel key={key} mesh={mesh} index={i} />;
           })}
       </group>
       <CuboidCollider

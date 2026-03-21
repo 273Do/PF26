@@ -1,21 +1,33 @@
 ---
 import Profile from "@/components/about/Profile.astro";
 import TextReveal from "@/components/animations/TextReveal.astro";
+import ErrorContent from "@/components/layouts/ErrorContent.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
+import { fetchAbout } from "@/lib/fetchContents";
+
+const { about } = await fetchAbout();
+
+const hasError = !about;
+if (hasError) {
+  Astro.response.status = 500;
+}
 ---
 
-<!doctype html>
-<html lang="ja">
-  <Layouts>
-    <div class="block w-full justify-between sm:flex">
-      <div class="block h-[3vh] sm:hidden"></div>
-      <div class="right-6 block w-3/5 sm:fixed sm:w-2/5">
-        <TextReveal
-          text="About"
-          class={`leading-none font-semibold md:translate-y-4 lg:translate-y-6`}
-        />
+<Layouts>
+  {
+    hasError ? (
+      <ErrorContent statusCode={500} />
+    ) : (
+      <div class="block w-full justify-between sm:flex">
+        <div class="block h-[3vh] sm:hidden" />
+        <div class="right-6 block w-3/5 sm:fixed sm:w-2/5">
+          <TextReveal
+            text="About"
+            class={`leading-none font-semibold md:translate-y-4 lg:translate-y-6`}
+          />
+        </div>
+        <Profile about={about} />
       </div>
-      <Profile />
-    </div>
-  </Layouts>
-</html>
+    )
+  }
+</Layouts>
