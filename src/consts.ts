@@ -4,7 +4,7 @@
 export const LOCAL_URL = import.meta.env.LOCAL_URL;
 
 export const SITE_TITLE = "273* Portfolio";
-export const SITE_DESCRIPTION = "273* Portfolio";
+export const SITE_DESCRIPTION = "Hello. I love CREATIVE.";
 
 // ページリンクとタイトル
 export const PAGE_LINKS = [
