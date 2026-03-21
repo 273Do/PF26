@@ -22,15 +22,15 @@ const image: Record<number, ImageMetadata> = {
 ---
 
 <Blinking
-  class="flex h-[calc(100vh-36px)] flex-col items-center justify-center"
+  class="flex h-[calc(100vh-36px)] flex-col items-center justify-center p-3"
 >
   <Image
     src={image[statusCode]}
     alt="error_img"
     class="pointer-events-none max-w-xl"
   />
-  <p class="text-muted-foreground">
-    illustration by
+  <div class="flex">
+    <p class="text-muted-foreground">illustration by</p>
     <a
       href={import.meta.env.PUBLIC_ERROR_ILLUSTRATOR_LINK}
       target="_blank"
@@ -39,5 +39,5 @@ const image: Record<number, ImageMetadata> = {
     >
       {import.meta.env.PUBLIC_ERROR_ILLUSTRATOR_CREATOR_X_ACCOUNT}
     </a>
-  </p>
+  </div>
 </Blinking>

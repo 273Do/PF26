@@ -4,10 +4,16 @@ import ProfileHeader from "./ProfileHeader.astro";
 import Blinking from "../animations/Blinking.astro";
 import { Separator } from "../ui/separator";
 
-import { fetchAbout } from "@/lib/fetchContents";
+import type { AboutObj } from "@/lib/fetchContents";
 
-const { about } = await fetchAbout();
+type Props = {
+  /**
+   * プロフィール情報
+   */
+  about: AboutObj;
+};
 
+const { about } = Astro.props;
 const { name, bio, description } = about;
 ---
 
