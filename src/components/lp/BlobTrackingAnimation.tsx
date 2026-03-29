@@ -185,7 +185,7 @@ export const BlobTrackingAnimation = ({
     // 一定フレームごとにランダムな頂点ペアを再抽選
     if (s.frameCount >= s.nextUpdate) {
       // 次の更新は100～110フレーム後に設定
-      s.nextUpdate = s.frameCount + Math.floor(Math.random() * 10) + 1;
+      s.nextUpdate = s.frameCount + Math.floor(Math.random() * 10) + 3;
 
       s.count = Math.floor(Math.random() * MAX_RECTS) + 1;
 
