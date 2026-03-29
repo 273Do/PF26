@@ -54,12 +54,12 @@ export const MobilePageNavigation = ({ currentPath, worksCount }: Props) => {
         <ul className="mt-[3vh] flex flex-col gap-2 font-mono text-3xl text-muted-foreground">
           {open &&
             PAGE_LINKS.filter((link) => link.href !== "").map(
-              ({ href, title }) => {
+              ({ href, title }, i) => {
                 const count = counts[href];
                 const isActive = currentPath === href;
 
                 return (
-                  <li className={cn(isActive && "text-foreground")}>
+                  <li className={cn(isActive && "text-foreground")} key={i}>
                     <a
                       href={`/${href}`}
                       onClick={() => setOpen(false)}

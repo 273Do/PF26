@@ -27,7 +27,10 @@ export default async function fetchApi<T>({
 
   if (query) {
     const qs = Object.entries(query)
-      .map(([key, value]) => `${key}=${value}`)
+      .map(
+        ([key, value]) =>
+          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+      )
       .join("&");
     urlStr += `?${qs}`;
   }

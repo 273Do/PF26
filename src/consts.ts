@@ -67,7 +67,7 @@ export const CORNER_POSITIONS: [string, string][] = [
 export const BlOB_TRACKING_ClASS = {
   // 枠線
   border:
-    "absolute border-[0.5px] border-dashed border-muted-foreground pointer-events-none hidden box-border",
+    "border-[0.5px] border-dashed border-muted-foreground pointer-events-none box-border",
   // 斜線
   diagonalLine:
     "repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(180,180,180,0.2) 3px, rgba(180,180,180,0.2) 4px)",
@@ -78,5 +78,5 @@ export const BlOB_TRACKING_ClASS = {
   coord:
     "dark:mix-blend-difference absolute left-0 top-full font-mono text-xs text-primary whitespace-nowrap",
   // +記号
-  plus: "absolute font-mono text-lg leading-none font-bold text-muted-foreground",
+  plus: "absolute font-mono text-base leading-none font-bold text-muted-foreground",
 };

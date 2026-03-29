@@ -232,7 +232,7 @@
 }
 
 #md hr {
-  @apply my-8 border-border;
+  @apply my-8 border-[0.5px] border-dashed border-muted-foreground pointer-events-none box-border;
 }
 
 #md img {

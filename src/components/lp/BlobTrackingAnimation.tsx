@@ -57,12 +57,18 @@ type OverlayDiv = {
   label: HTMLSpanElement;
 };
 
-const createOverlayDiv = (border: string, diagonalLine: string): OverlayDiv => {
-  const el = document.createElement("div");
-  el.className = border;
-  el.style.backgroundImage = diagonalLine;
+const createOverlayDiv = (): OverlayDiv => {
+  const {
+    border,
+    diagonalLine,
+    label: labelStyle,
+    coord: coordStyle,
+    plus,
+  } = BlOB_TRACKING_ClASS;
 
-  const { label: labelStyle, coord: coordStyle, plus } = BlOB_TRACKING_ClASS;
+  const el = document.createElement("div");
+  el.className = cn(border, "absolute hidden");
+  el.style.backgroundImage = diagonalLine;
 
   // 4隅の+記号を生成
   CORNER_POSITIONS.forEach(([transform, pos]) => {
@@ -91,8 +97,6 @@ export const BlobTrackingAnimation = ({
   linkTitle,
 }: Props) => {
   const { camera, gl } = useThree();
-
-  const { border, diagonalLine } = BlOB_TRACKING_ClASS;
 
   // divRefs: el + coord + label の参照をキャッシュ
   const divRefs = useRef<OverlayDiv[]>([]);
@@ -126,13 +130,13 @@ export const BlobTrackingAnimation = ({
 
     // BlobTracking表示用div
     divRefs.current = Array.from({ length: MAX_RECTS }, () => {
-      const overlay = createOverlayDiv(border, diagonalLine);
+      const overlay = createOverlayDiv();
       parent.appendChild(overlay.el);
       return overlay;
     });
 
     // BoundingBox表示用div
-    const bbox = createOverlayDiv(border, diagonalLine);
+    const bbox = createOverlayDiv();
     parent.appendChild(bbox.el);
     bboxRef.current = bbox;
 
@@ -168,7 +172,6 @@ export const BlobTrackingAnimation = ({
       svgRef.current = null;
       lineRefs.current = [];
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gl, mesh]);
 
   useFrame(() => {
@@ -182,7 +185,7 @@ export const BlobTrackingAnimation = ({
     // 一定フレームごとにランダムな頂点ペアを再抽選
     if (s.frameCount >= s.nextUpdate) {
       // 次の更新は100～110フレーム後に設定
-      s.nextUpdate = s.frameCount + Math.floor(Math.random() * 10) + 1;
+      s.nextUpdate = s.frameCount + Math.floor(Math.random() * 10) + 3;
 
       s.count = Math.floor(Math.random() * MAX_RECTS) + 1;
 

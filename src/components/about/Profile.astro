@@ -4,7 +4,9 @@ import ProfileHeader from "./ProfileHeader.astro";
 import Blinking from "../animations/Blinking.astro";
 import { Separator } from "../ui/separator";
 
+import { BlOB_TRACKING_ClASS } from "@/consts";
 import type { AboutObj } from "@/lib/fetchContents";
+import { cn } from "@/lib/utils";
 
 type Props = {
   /**
@@ -15,13 +17,15 @@ type Props = {
 
 const { about } = Astro.props;
 const { name, bio, description } = about;
+
+const { border } = BlOB_TRACKING_ClASS;
 ---
 
 <div class="w-full sm:w-3/5 sm:pr-6">
   <div class="h-[60vh]"></div>
   <Blinking>
     <ProfileHeader name={name} bio={bio} />
-    <Separator className="my-3" />
+    <Separator className={cn(border, "my-3")} />
   </Blinking>
   <Blinking delay={0.2}>
     <ProfileArticle description={description} />

@@ -2,7 +2,7 @@
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 
-import { CORNER_POSITIONS, PAGE_LINKS } from "@/consts";
+import { BlOB_TRACKING_ClASS, CORNER_POSITIONS, PAGE_LINKS } from "@/consts";
 import type { WorkObj } from "@/lib/fetchContents";
 import { cn } from "@/lib/utils";
 
@@ -17,24 +17,19 @@ const worksHref = PAGE_LINKS.find((link) => link.title === "Works")
   ?.href as string;
 
 const { documentId, title, description, tags, releaseDate } = Astro.props;
+
+const { border, plus } = BlOB_TRACKING_ClASS;
 ---
 
 <a href={`/${worksHref}/${documentId}`}>
   <div
     id="workItem"
-    class="group relative z-0 flex cursor-pointer flex-col gap-1 py-2 duration-200 sm:px-3"
+    class="group relative z-0 flex cursor-pointer flex-col gap-1 py-2 hover:border-x sm:px-3"
   >
     {
       CORNER_POSITIONS.map(([transform, pos]) => (
         <span
-          class={cn(
-            pos,
-            transform,
-            `
-              absolute font-mono text-base leading-none font-bold text-muted-foreground opacity-0
-              group-hover:opacity-100
-            `,
-          )}
+          class={cn(plus, pos, transform, "opacity-0 group-hover:opacity-100")}
         >
           +
         </span>
@@ -57,7 +52,7 @@ const { documentId, title, description, tags, releaseDate } = Astro.props;
       </p>
     </div>
   </div>
-  <Separator />
+  <Separator className={cn(border, "border-border")} />
 </a>
 
 <style>

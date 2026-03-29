@@ -12,4 +12,4 @@ const { description } = Astro.props;
 const html = marked(description);
 ---
 
-<div id="md" set:html={html} />
+<div id="md" class="mb-3" set:html={html} />
