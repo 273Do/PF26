@@ -1,7 +1,6 @@
 ---
 import { IconMarquee } from "./IconMarquee";
 import ProfileArticle from "../about/ProfileArticle.astro";
-import { Separator } from "../ui/separator";
 
 import type { WorkObj } from "@/lib/fetchContents";
 
@@ -17,9 +16,20 @@ const technologyArray =
 
 <article class="z-10 w-full max-w-4xl items-center space-y-4 text-foreground">
   <IconMarquee iconNameList={technologyArray} client:load />
-  <Separator />
+  <div id="md">
+    <hr
+      class="pointer-events-none my-1 box-border border-[0.5px] border-dashed border-muted-foreground"
+      style="margin-block: calc(var(--spacing) * 1)"
+    />
+  </div>
+
   <ProfileArticle description={article} />
-  <Separator className="my-1" />
+  <div id="md">
+    <hr
+      class="pointer-events-none my-1 box-border border-[0.5px] border-dashed border-muted-foreground"
+      style="margin-block: calc(var(--spacing) * 1)"
+    />
+  </div>
 </article>
 
 <script is:inline>
