@@ -18,6 +18,26 @@ const section =
 const title = `${SITE_TITLE} ${section}`;
 ---
 
+<script>
+  import Lenis from "lenis";
+
+  let lenis: Lenis | null = null;
+
+  const initLenis = () => {
+    if (lenis) lenis.destroy();
+    lenis = new Lenis();
+
+    const raf = (time: number) => {
+      lenis!.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+  };
+
+  initLenis();
+  document.addEventListener("astro:after-swap", initLenis);
+</script>
+
 <script is:inline>
   const applyTheme = () => {
     const theme =
