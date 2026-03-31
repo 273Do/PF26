@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { PAGE_LINKS } from "@/consts";
 import { cn } from "@/lib/utils";
 
-const showcaseCount = 1;
+const sandboxCount = 1;
 
 type Props = {
   /**
@@ -27,7 +27,7 @@ export const MobilePageNavigation = ({ currentPath, worksCount }: Props) => {
 
   const counts: Record<string, number> = {
     works: worksCount,
-    showcase: showcaseCount,
+    sandbox: sandboxCount,
   };
 
   return (

@@ -11,7 +11,7 @@ export const PAGE_LINKS = [
   { title: "Home", href: "" },
   { title: "About", href: "about" },
   { title: "Works", href: "works" },
-  { title: "Showcase", href: "showcase" },
+  { title: "Sandbox", href: "sandbox" },
   { title: "Contact", href: "contact" },
 ] as const;
 
