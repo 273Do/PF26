@@ -53,3 +53,22 @@ export const fetchWork = async (documentId: string) => {
     return { workDetails: null };
   }
 };
+
+export type SandboxObj = components["schemas"]["Sandbox"];
+
+export const fetchSandboxes = async () => {
+  try {
+    const sandboxes = await fetchApi<SandboxObj[]>({
+      endpoint: "sandboxes",
+      wrappedByKey: "data",
+      query: { populate: "*" },
+    });
+
+    const count = sandboxes?.length || 0;
+
+    return { sandboxes: sandboxes || null, count };
+  } catch (error) {
+    console.error("Failed to fetch sandboxes:", error);
+    return { sandboxes: null, count: 0 };
+  }
+};
