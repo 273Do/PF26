@@ -9,8 +9,6 @@ import { Button } from "../ui/button";
 import { PAGE_LINKS } from "@/consts";
 import { cn } from "@/lib/utils";
 
-const sandboxCount = 1;
-
 type Props = {
   /**
    * 現在のパス
@@ -20,14 +18,22 @@ type Props = {
    * ｗorksのデータ数
    */
   worksCount: number;
+  /**
+   * sandboxesのデータ数
+   */
+  sandboxesCount: number;
 };
 
-export const MobilePageNavigation = ({ currentPath, worksCount }: Props) => {
+export const MobilePageNavigation = ({
+  currentPath,
+  worksCount,
+  sandboxesCount,
+}: Props) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const counts: Record<string, number> = {
     works: worksCount,
-    sandbox: sandboxCount,
+    sandbox: sandboxesCount,
   };
 
   return (
