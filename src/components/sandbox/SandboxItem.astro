@@ -1,0 +1,48 @@
+---
+import { BlOB_TRACKING_ClASS, CORNER_POSITIONS } from "@/consts";
+import type { SandboxObj } from "@/lib/fetchContents";
+import { cn } from "@/lib/utils";
+
+const {
+  border,
+  label: labelStyle,
+  coord: coordStyle,
+  plus,
+} = BlOB_TRACKING_ClASS;
+
+type Props = Pick<SandboxObj, "title" | "image" | "tags" | "contentLink">;
+
+const { title, image, tags, contentLink } = Astro.props;
+---
+
+<a href={contentLink} target="_blank" rel="noopener noreferrer">
+  <div
+    class={cn(
+      border,
+      contentLink && "cursor-alias",
+      "group pointer-events-auto relative border-none hover:border-dashed dark:invert",
+    )}
+  >
+    <div class="opacity-0 group-hover:opacity-100">
+      {
+        CORNER_POSITIONS.map(([transform, pos]) => (
+          <span class={cn(plus, pos, transform, "z-100 dark:invert")}>+</span>
+        ))
+      }
+      <span class={cn(labelStyle, "dark:invert")}>{title}</span>
+    </div>
+    <div class="dither-md w-full">
+      <img
+        src={`${new URL(import.meta.env.STRAPI_IMAGE_URL).origin}${image[0].url}`}
+        alt={title}
+        class="size-full object-cover object-top dark:opacity-70 dark:invert"
+      />
+    </div>
+    <span
+      class={cn(
+        coordStyle,
+        "mt-1 opacity-0 group-hover:opacity-100 dark:invert",
+      )}>{tags?.map((tag) => tag.name).join(", ")}</span
+    >
+  </div>
+</a>
