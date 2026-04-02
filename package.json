@@ -39,6 +39,7 @@
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dither-plugin": "^1.1.1",
     "eslint": "^10.0.2",
     "eslint-plugin-astro": "^1.6.0",
     "eslint-plugin-better-tailwindcss": "^4.3.1",
