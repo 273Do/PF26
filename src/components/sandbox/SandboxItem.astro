@@ -43,9 +43,12 @@ const { title, image, tags, contentLink } = Astro.props;
         src={`${import.meta.env.STRAPI_IMAGE_URL}${image[0].url}`}
         alt={title}
         class={`
-          absolute inset-0 size-full object-cover object-top transition-opacity
-          opacity-20 sm:opacity-0 sm:group-hover:opacity-20
-          dark:invert dark:opacity-35 dark:sm:opacity-0 dark:sm:group-hover:opacity-35
+          absolute inset-0 size-full object-cover object-top opacity-20 transition-opacity will-change-transform
+          sm:opacity-0
+          sm:group-hover:opacity-20
+          dark:opacity-35 dark:invert
+          dark:sm:opacity-0
+          dark:sm:group-hover:opacity-35
         `}
       />
     </div>
