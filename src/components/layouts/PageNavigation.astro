@@ -4,8 +4,6 @@ import Blinking from "../animations/Blinking.astro";
 import { PAGE_LINKS } from "@/consts";
 import { cn } from "@/lib/utils";
 
-const showcaseCount = 1;
-
 type Props = {
   /**
    * 現在のパス
@@ -15,13 +13,17 @@ type Props = {
    * ｗorksのデータ数
    */
   worksCount: number;
+  /**
+   * sandboxesのデータ数
+   */
+  sandboxesCount: number;
 };
 
-const { currentPath, worksCount } = Astro.props;
+const { currentPath, worksCount, sandboxesCount } = Astro.props;
 
 const counts: Record<string, number> = {
   works: worksCount,
-  showcase: showcaseCount,
+  sandbox: sandboxesCount,
 };
 ---
 

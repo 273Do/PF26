@@ -1,0 +1,53 @@
+---
+import Blinking from "@/components/animations/Blinking.astro";
+import TextReveal from "@/components/animations/TextReveal.astro";
+import ErrorContent from "@/components/layouts/ErrorContent.astro";
+import Layouts from "@/components/layouts/Layouts.astro";
+import SandboxItem from "@/components/sandbox/SandboxItem.astro";
+import { fetchSandboxes } from "@/lib/fetchContents";
+
+const { sandboxes, count } = await fetchSandboxes();
+
+const hasError = !sandboxes;
+if (hasError) {
+  Astro.response.status = 500;
+}
+
+const randomSortSandboxes = sandboxes?.sort(() => Math.random() - 0.5) ?? [];
+---
+
+<Layouts>
+  {
+    hasError ? (
+      <ErrorContent statusCode={500} />
+    ) : (
+      <div class="relative sm:grid sm:grid-cols-3">
+        <div class="top-1/2 left-3 mt-15 w-full -translate-y-1/2 sm:fixed sm:left-6 sm:mt-0">
+          <div class="flex w-2/3 items-end sm:w-1/4">
+            <TextReveal text="Sandbox" class="font-semibold" />
+            <Blinking>
+              <p class="text-end text-3xl font-semibold text-muted-foreground sm:text-2xl 2xl:text-4xl">
+                ({count})
+              </p>
+            </Blinking>
+          </div>
+        </div>
+        <div class="col-start-2 -mt-9 mb-12 flex flex-col space-y-7.5 sm:my-12">
+          {randomSortSandboxes.map(({ title, image, tags, contentLink }, i) => (
+            <Blinking delay={0.1 * i}>
+              <SandboxItem
+                title={title}
+                image={image}
+                tags={tags}
+                contentLink={contentLink}
+              />
+            </Blinking>
+          ))}
+        </div>
+        <div class="fixed top-1/2 right-3 -translate-y-1/2 bg-background sm:right-6">
+          <p>Play Ground, R&D Collection, Experiments</p>
+        </div>
+      </div>
+    )
+  }
+</Layouts>
