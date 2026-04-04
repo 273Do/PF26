@@ -33,17 +33,19 @@ const randomSortSandboxes = sandboxes?.sort(() => Math.random() - 0.5) ?? [];
           </div>
         </div>
         <div class="col-start-2 -mt-9 mb-12 flex flex-col space-y-7.5 sm:my-12">
-          {randomSortSandboxes.map(({ title, image, tags, contentLink }) => (
-            <SandboxItem
-              title={title}
-              image={image}
-              tags={tags}
-              contentLink={contentLink}
-            />
+          {randomSortSandboxes.map(({ title, image, tags, contentLink }, i) => (
+            <Blinking delay={0.1 * i}>
+              <SandboxItem
+                title={title}
+                image={image}
+                tags={tags}
+                contentLink={contentLink}
+              />
+            </Blinking>
           ))}
         </div>
         <div class="fixed top-1/2 right-3 -translate-y-1/2 bg-background sm:right-6">
-          <p>description text here.</p>
+          <p>Play Ground, R&D Collection, Experiments</p>
         </div>
       </div>
     )
