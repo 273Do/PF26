@@ -20,13 +20,13 @@ const { title, image, tags, contentLink } = Astro.props;
     class={cn(
       border,
       contentLink && "cursor-alias",
-      "group pointer-events-auto relative border-none hover:border-dashed dark:invert",
+      "group pointer-events-auto relative border-dashed sm:border-none sm:hover:border-dashed dark:invert",
     )}
   >
-    <div class="opacity-0 group-hover:opacity-100">
+    <div class="opacity-100 sm:opacity-0 sm:group-hover:opacity-100">
       {
         CORNER_POSITIONS.map(([transform, pos]) => (
-          <span class={cn(plus, pos, transform, "z-100 dark:invert")}>+</span>
+          <span class={cn(plus, pos, transform, "z-50 dark:invert")}>+</span>
         ))
       }
       <span class={cn(labelStyle, "dark:invert")}>{title}</span>
@@ -43,17 +43,16 @@ const { title, image, tags, contentLink } = Astro.props;
         src={`${import.meta.env.STRAPI_IMAGE_URL}${image[0].url}`}
         alt={title}
         class={`
-          absolute inset-0 size-full object-cover object-top opacity-0 transition-opacity
-          group-hover:opacity-20
-          dark:invert
-          dark:group-hover:opacity-35
+          absolute inset-0 size-full object-cover object-top transition-opacity
+          opacity-20 sm:opacity-0 sm:group-hover:opacity-20
+          dark:invert dark:opacity-35 dark:sm:opacity-0 dark:sm:group-hover:opacity-35
         `}
       />
     </div>
     <span
       class={cn(
         coordStyle,
-        "mt-1 opacity-0 group-hover:opacity-100 dark:invert",
+        "mt-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 dark:invert",
       )}>{tags?.map((tag) => tag.name).join(", ")}</span
     >
   </div>
