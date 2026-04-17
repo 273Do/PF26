@@ -27,13 +27,23 @@ const CONTACT_LINKS: LinkObj[] = [
   ...CONTACT_SNS_LINKS,
   ...SUPPORT_LINKS,
 ];
+
+const siteUrl = process.env.URL ?? "";
+const bannerCode = `<a href="${siteUrl}">\n  <img src="${siteUrl}/imgs/banner.png" width="200" height="40" />\n</a>`;
+const BANNERS = [
+  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
+  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
+  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
+  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
+  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
+];
 ---
 
 <Layouts>
   <div
-    class="fixed bottom-9 z-200 h-full w-2/5 sm:w-2/5 dark:mix-blend-difference"
+    class="fixed bottom-9 z-200 hidden h-full w-2/5 sm:block sm:w-2/5 dark:mix-blend-difference"
   >
-    <MutualLinksCanvas client:load />
+    <MutualLinksCanvas client:load banners={BANNERS} bannerCode={bannerCode} />
   </div>
   <div class="mb-9 ml-6 flex size-full flex-col items-end justify-end">
     <div class="h-[30vh]"></div>
