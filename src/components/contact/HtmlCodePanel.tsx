@@ -45,7 +45,7 @@ export const HtmlCodePanel = ({
           className={cn(border, "pointer-events-auto cursor-copy")}
           onClick={handleClick}
         >
-          <pre className="p-1 font-mono text-[5px] wrap-anywhere whitespace-pre-wrap">
+          <pre className="p-1 font-mono text-[4px] wrap-anywhere whitespace-pre-wrap">
             <code>{code}</code>
           </pre>
           {CORNER_POSITIONS.map(([transform, pos], i) => (
