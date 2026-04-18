@@ -30,7 +30,12 @@ export const HtmlCodePanel = ({
   };
 
   return (
-    <RigidBody position={position} colliders={false} enabledTranslations={[true, true, false]} enabledRotations={[false, false, true]}>
+    <RigidBody
+      position={position}
+      colliders={false}
+      enabledTranslations={[true, true, false]}
+      enabledRotations={[false, false, true]}
+    >
       <CuboidCollider args={[PANEL_W, PANEL_H / 2, 0.9]} />
       <Html transform distanceFactor={CAMERA_Z}>
         <div
