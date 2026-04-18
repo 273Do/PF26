@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { OrbitControls } from "@react-three/drei";
+import { Loader, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
 import { EnvironmentLight } from "./EnvironmentLight";
@@ -32,6 +32,25 @@ export const LogoCanvas = () => {
           <PostProcess />
         </Suspense>
       </Canvas>
+      <Loader
+        containerStyles={{
+          background: "transparent",
+          transition: "opacity 600ms ease",
+        }}
+        innerStyles={{
+          width: 200,
+          height: 1,
+          background: "var(--border)",
+        }}
+        barStyles={{
+          height: 1,
+          background: "var(--foreground)",
+          transition: "transform 200ms ease",
+        }}
+        dataStyles={{
+          color: "transparent",
+        }}
+      />
     </div>
   );
 };
