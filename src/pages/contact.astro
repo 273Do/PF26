@@ -3,6 +3,7 @@ import Blinking from "@/components/animations/Blinking.astro";
 import TextReveal from "@/components/animations/TextReveal.astro";
 import TextScramble from "@/components/animations/TextScramble.astro";
 import { MutualLinksCanvas } from "@/components/contact/MutualLinksCanvas";
+import ErrorContent from "@/components/layouts/ErrorContent.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
 import {
   CONTACT_SNS_LINKS,
@@ -10,6 +11,7 @@ import {
   SNS_LINKS,
   SUPPORT_LINKS,
 } from "@/consts";
+import { fetchMutualLinks } from "@/lib/fetchContents";
 
 type LinkObj = {
   /**
@@ -29,61 +31,69 @@ const CONTACT_LINKS: LinkObj[] = [
 ];
 
 const siteUrl = process.env.URL ?? "";
-const bannerCode = `<a href="${siteUrl}">\n  <img src="${siteUrl}/imgs/banner.png" width="200" height="40" />\n</a>`;
-const BANNERS = [
-  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
-  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
-  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
-  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
-  `<a href=""><img src="/imgs/banner.png" width="200" height="40" /></a>`,
-];
+const PFBannerCode = `<a href="${siteUrl}" target="_blank" rel="noopener noreferrer">\n  <img src="${siteUrl}/imgs/banner.png" width="200" height="40" />\n</a>`;
+
+const { mutualLinks: banners } = await fetchMutualLinks();
+
+const hasError = !banners;
+if (hasError) {
+  Astro.response.status = 500;
+}
 ---
 
 <Layouts>
-  <div
-    class="fixed bottom-9 z-200 hidden h-full w-2/5 sm:block sm:w-2/5 dark:mix-blend-difference"
-  >
-    <MutualLinksCanvas client:load banners={BANNERS} bannerCode={bannerCode} />
-  </div>
-  <div class="mb-9 ml-6 flex size-full flex-col items-end justify-end">
-    <div class="h-[30vh]"></div>
-    <div class="flex w-4/5 flex-col gap-2 sm:w-3/5">
-      <div>
-        <TextReveal
-          text="Contact"
-          class="translate-y-4 leading-none font-semibold md:translate-y-4 lg:translate-y-6"
-        />
-      </div>
-      <Blinking class="ml-2">
-        <a
-          class="cursor-alias text-xl font-semibold hover:underline md:text-3xl lg:text-4xl"
-          href={`mailto:${MAIL_ADDRESS}`}
-        >
-          {MAIL_ADDRESS}
-        </a>
-      </Blinking>
-      <Blinking class="ml-2" delay={0.2}>
-        <ul class="inline-flex flex-col">
-          {
-            CONTACT_LINKS.map(({ href, title }, i) => (
-              <li>
-                <a
-                  class="cursor-alias hover:underline"
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <TextScramble
-                    text={title}
-                    delay={0.015 * CONTACT_LINKS.length * i}
-                    class={i === CONTACT_LINKS.length - 1 ? "mt-2" : ""}
-                  />
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </Blinking>
-    </div>
-  </div>
+  {
+    hasError ? (
+      <ErrorContent statusCode={500} />
+    ) : (
+      <>
+        <div class="fixed bottom-9 z-200 hidden h-full w-2/5 sm:block sm:w-2/5 dark:mix-blend-difference">
+          <MutualLinksCanvas
+            client:load
+            banners={banners}
+            PFBannerCode={PFBannerCode}
+          />
+        </div>
+        <div class="mb-9 ml-6 flex size-full flex-col items-end justify-end">
+          <div class="h-[30vh]" />
+          <div class="flex w-4/5 flex-col gap-2 sm:w-3/5">
+            <div>
+              <TextReveal
+                text="Contact"
+                class="translate-y-4 leading-none font-semibold md:translate-y-4 lg:translate-y-6"
+              />
+            </div>
+            <Blinking class="ml-2">
+              <a
+                class="cursor-alias text-xl font-semibold hover:underline md:text-3xl lg:text-4xl"
+                href={`mailto:${MAIL_ADDRESS}`}
+              >
+                {MAIL_ADDRESS}
+              </a>
+            </Blinking>
+            <Blinking class="ml-2" delay={0.2}>
+              <ul class="inline-flex flex-col">
+                {CONTACT_LINKS.map(({ href, title }, i) => (
+                  <li>
+                    <a
+                      class="cursor-alias hover:underline"
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TextScramble
+                        text={title}
+                        delay={0.015 * CONTACT_LINKS.length * i}
+                        class={i === CONTACT_LINKS.length - 1 ? "mt-2" : ""}
+                      />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Blinking>
+          </div>
+        </div>
+      </>
+    )
+  }
 </Layouts>

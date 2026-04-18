@@ -7,6 +7,8 @@ import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
 
 import { HtmlCodePanel } from "./HtmlCodePanel";
 
+import type { MutualLinkObj } from "@/lib/fetchContents";
+
 export const CAMERA_Z = 8;
 const BANNER_W = 1;
 const BANNER_H = 0.2;
@@ -34,7 +36,13 @@ const Banner = ({
     <Html transform distanceFactor={CAMERA_Z}>
       <div
         className="h-5 w-25 [&_a]:cursor-alias"
-        dangerouslySetInnerHTML={{ __html: html }}
+        dangerouslySetInnerHTML={{
+          __html: html.replace(
+            // aタグを置き換え
+            /<a\b/gi,
+            '<a target="_blank" rel="noopener noreferrer"',
+          ),
+        }}
       />
     </Html>
   </RigidBody>
@@ -52,10 +60,10 @@ const Boundaries = () => (
 );
 
 type Props = {
-  banners: string[];
-  bannerCode: string;
+  banners: MutualLinkObj[];
+  PFBannerCode: string;
 };
-export const MutualLinksCanvas = ({ banners, bannerCode }: Props) => {
+export const MutualLinksCanvas = ({ banners, PFBannerCode }: Props) => {
   const positions = useMemo<[number, number, number][]>(
     () => banners.map((_, i) => [(Math.random() - 0.5) * 3.5, 3 + i * 2, 0]),
     [],
@@ -80,12 +88,17 @@ export const MutualLinksCanvas = ({ banners, bannerCode }: Props) => {
       )}
       <Suspense fallback={null}>
         <Physics debug={IS_DEBUG}>
-          {banners.map((html, i) => (
-            <Banner key={i} html={html} position={positions[i]} />
-          ))}
-          {bannerCode && (
-            <HtmlCodePanel code={bannerCode} position={panelPosition} />
+          {banners.map(
+            (banner, i) =>
+              banner.htmlCode && (
+                <Banner
+                  key={i}
+                  html={banner.htmlCode}
+                  position={positions[i]}
+                />
+              ),
           )}
+          <HtmlCodePanel code={PFBannerCode} position={panelPosition} />
           <Boundaries />
         </Physics>
       </Suspense>

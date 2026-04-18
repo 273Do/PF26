@@ -72,3 +72,19 @@ export const fetchSandboxes = async () => {
     return { sandboxes: null, count: 0 };
   }
 };
+
+export type MutualLinkObj = components["schemas"]["MutualLink"];
+
+export const fetchMutualLinks = async () => {
+  try {
+    const mutualLinks = await fetchApi<MutualLinkObj[]>({
+      endpoint: "mutual-links",
+      wrappedByKey: "data",
+    });
+
+    return { mutualLinks: mutualLinks || null };
+  } catch (error) {
+    console.error("Failed to fetch mutualLinks:", error);
+    return { mutualLinks: null };
+  }
+};
