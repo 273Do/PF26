@@ -12,7 +12,7 @@ const pathname = Astro.url.pathname
   .replace(import.meta.env.BASE_URL, "")
   .split("/")[0];
 
-const isLP = pathname === "";
+const isMixBlend = pathname === "" || "contact";
 
 const { count: worksCount } = await fetchWorks();
 const { count: sandboxesCount } = await fetchSandboxes();
@@ -20,7 +20,7 @@ const { count: sandboxesCount } = await fetchSandboxes();
 
 <header
   class={cn(
-    isLP ? "dark:sm:mix-blend-difference" : "bg-background",
+    isMixBlend ? "dark:sm:mix-blend-difference" : "bg-background",
     "fixed z-100 flex h-9 w-full items-center justify-between px-3 sm:px-6",
   )}
 >

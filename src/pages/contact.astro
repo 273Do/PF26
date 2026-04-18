@@ -2,6 +2,7 @@
 import Blinking from "@/components/animations/Blinking.astro";
 import TextReveal from "@/components/animations/TextReveal.astro";
 import TextScramble from "@/components/animations/TextScramble.astro";
+import MutualLinks from "@/components/contact/MutualLinks.astro";
 import { MutualLinksCanvas } from "@/components/contact/MutualLinksCanvas";
 import ErrorContent from "@/components/layouts/ErrorContent.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
@@ -47,14 +48,14 @@ if (hasError) {
       <ErrorContent statusCode={500} />
     ) : (
       <>
-        <div class="fixed bottom-9 z-200 hidden h-full w-2/5 sm:block sm:w-2/5 dark:mix-blend-difference">
+        <div class="fixed bottom-9 hidden h-full w-2/5 sm:block dark:mix-blend-difference">
           <MutualLinksCanvas
             client:load
             banners={banners}
             PFBannerCode={PFBannerCode}
           />
         </div>
-        <div class="mb-9 ml-6 flex size-full flex-col items-end justify-end">
+        <div class="mb-9 flex size-full flex-col items-end justify-end sm:ml-6">
           <div class="h-[30vh]" />
           <div class="flex w-4/5 flex-col gap-2 sm:w-3/5">
             <div>
@@ -91,6 +92,7 @@ if (hasError) {
                 ))}
               </ul>
             </Blinking>
+            <MutualLinks banners={banners} PFBannerCode={PFBannerCode} />
           </div>
         </div>
       </>

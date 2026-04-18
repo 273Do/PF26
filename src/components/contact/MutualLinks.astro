@@ -1,0 +1,44 @@
+---
+import { HtmlCodePanel } from "./HtmlCodePanel";
+import Blinking from "../animations/Blinking.astro";
+
+import type { MutualLinkObj } from "@/lib/fetchContents";
+
+type Props = {
+  /**
+   * バナー一覧
+   */
+  banners: MutualLinkObj[];
+  /**
+   * PFバナーコード
+   */
+  PFBannerCode: string;
+};
+
+const { banners, PFBannerCode } = Astro.props;
+---
+
+<div class="my-3 w-full sm:hidden">
+  <div>
+    {
+      banners.map(
+        ({ htmlCode }, i) =>
+          htmlCode && (
+            <Blinking delay={0.1 * i}>
+              <div
+                class="h-7.5 w-37.5 [&_a]:cursor-alias"
+                set:html={htmlCode.replace(
+                  // aタグを置き換え
+                  /<a\b/gi,
+                  '<a target="_blank" rel="noopener noreferrer"',
+                )}
+              />
+            </Blinking>
+          ),
+      )
+    }
+  </div>
+  <Blinking class="relative">
+    <HtmlCodePanel client:load code={PFBannerCode} />
+  </Blinking>
+</div>

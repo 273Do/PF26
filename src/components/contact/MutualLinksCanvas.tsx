@@ -60,7 +60,13 @@ const Boundaries = () => (
 );
 
 type Props = {
+  /**
+   * バナー一覧
+   */
   banners: MutualLinkObj[];
+  /**
+   * PFバナーコード
+   */
   PFBannerCode: string;
 };
 export const MutualLinksCanvas = ({ banners, PFBannerCode }: Props) => {
@@ -89,13 +95,9 @@ export const MutualLinksCanvas = ({ banners, PFBannerCode }: Props) => {
       <Suspense fallback={null}>
         <Physics debug={IS_DEBUG}>
           {banners.map(
-            (banner, i) =>
-              banner.htmlCode && (
-                <Banner
-                  key={i}
-                  html={banner.htmlCode}
-                  position={positions[i]}
-                />
+            ({ htmlCode }, i) =>
+              htmlCode && (
+                <Banner key={i} html={htmlCode} position={positions[i]} />
               ),
           )}
           <HtmlCodePanel code={PFBannerCode} position={panelPosition} />
