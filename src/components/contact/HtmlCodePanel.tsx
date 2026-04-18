@@ -3,7 +3,8 @@ import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 import { CAMERA_Z } from "./MutualLinksCanvas";
 
-import { CORNER_POSITIONS } from "@/consts";
+import { BlOB_TRACKING_ClASS, CORNER_POSITIONS } from "@/consts";
+import { cn } from "@/lib/utils";
 
 const PANEL_W = 2.1;
 const PANEL_H = 0.9;
@@ -15,6 +16,8 @@ export const HtmlCodePanel = ({
   code: string;
   position: [number, number, number];
 }) => {
+  const { border, label, coord, plus } = BlOB_TRACKING_ClASS;
+
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const codeEl = e.currentTarget.querySelector("code");
     navigator.clipboard.writeText(codeEl?.textContent ?? "");
@@ -39,27 +42,22 @@ export const HtmlCodePanel = ({
       <CuboidCollider args={[PANEL_W, PANEL_H / 2, 0.9]} />
       <Html transform distanceFactor={CAMERA_Z}>
         <div
-          className="group relative cursor-copy border-[0.5px] border-dashed border-muted-foreground p-1"
+          className={cn(border, "pointer-events-auto cursor-copy")}
           onClick={handleClick}
         >
-          <pre className="font-mono text-[5px] wrap-anywhere whitespace-pre-wrap">
+          <pre className="p-1 font-mono text-[5px] wrap-anywhere whitespace-pre-wrap">
             <code>{code}</code>
           </pre>
           {CORNER_POSITIONS.map(([transform, pos], i) => (
-            <span
-              key={i}
-              className={`absolute font-mono text-[8px] leading-none font-bold text-muted-foreground ${pos} ${transform}`}
-            >
+            <span key={i} className={cn(plus, pos, transform, "text-[8px]")}>
               +
             </span>
           ))}
-          <span
-            className="
-              absolute right-0 bottom-full bg-foreground font-mono text-xs text-[5px] whitespace-nowrap text-background
-            "
-            data-label
-          >
+          <span className={cn(label, "text-[5px]")} data-label>
             click to copy
+          </span>
+          <span className={cn(coord, "text-[5px]")}>
+            Feel free to link or contact me.
           </span>
         </div>
       </Html>
