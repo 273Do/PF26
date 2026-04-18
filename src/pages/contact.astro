@@ -2,6 +2,7 @@
 import Blinking from "@/components/animations/Blinking.astro";
 import TextReveal from "@/components/animations/TextReveal.astro";
 import TextScramble from "@/components/animations/TextScramble.astro";
+import MutualLinks from "@/components/contact/MutualLinks.astro";
 import { MutualLinksCanvas } from "@/components/contact/MutualLinksCanvas";
 import ErrorContent from "@/components/layouts/ErrorContent.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
@@ -91,6 +92,7 @@ if (hasError) {
                 ))}
               </ul>
             </Blinking>
+            <MutualLinks banners={banners} PFBannerCode={PFBannerCode} />
           </div>
         </div>
       </>
