@@ -20,7 +20,12 @@ const Banner = ({
   html: string;
   position: [number, number, number];
 }) => (
-  <RigidBody position={position} colliders={false}>
+  <RigidBody
+    position={position}
+    colliders={false}
+    enabledTranslations={[true, true, false]}
+    enabledRotations={[false, false, true]}
+  >
     <CuboidCollider args={[BANNER_W, BANNER_H, 0.9]} />
     <mesh visible={true}>
       <boxGeometry args={[BANNER_W, BANNER_H, 0.05]} />
@@ -52,11 +57,11 @@ type Props = {
 };
 export const MutualLinksCanvas = ({ banners, bannerCode }: Props) => {
   const positions = useMemo<[number, number, number][]>(
-    () => banners.map((_, i) => [(Math.random() - 0.5) * 3, 2.2 + i * 2, 0]),
+    () => banners.map((_, i) => [(Math.random() - 0.5) * 3.5, 3 + i * 2, 0]),
     [],
   );
   const panelPosition = useMemo<[number, number, number]>(
-    () => [(Math.random() - 0.5) * 2, 2.0, 0],
+    () => [(Math.random() - 0.5) * 1.5, 2.0, 0],
     [],
   );
 
