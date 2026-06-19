@@ -25,5 +25,8 @@ pnpm-debug.log*
 # pnpm store
 .pnpm-store
 
+# Local Netlify folder
+.netlify
+
 # openapiで自動生成されるため不要自動生成される
 types

@@ -2,6 +2,9 @@
 import TextReveal from "@/components/animations/TextReveal.astro";
 import Layouts from "@/components/layouts/Layouts.astro";
 import { LogoCanvas } from "@/components/lp/LogoCanvas";
+
+// user agent を判定するためルートページだけ SSR にする
+export const prerender = false;
 ---
 
 <Layouts>

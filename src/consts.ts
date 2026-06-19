@@ -80,3 +80,39 @@ export const BlOB_TRACKING_ClASS = {
   // +記号
   plus: "absolute font-mono text-base leading-none font-bold text-muted-foreground",
 };
+
+const C = {
+  lightGray: "\x1b[37m",
+  gray: "\x1b[90m",
+  bold: "\x1b[1m",
+  bg: "\x1b[48;5;m",
+  bgWhite: "\x1b[107m",
+  black: "\x1b[30m",
+  underline: "\x1b[4m",
+  reset: "\x1b[0m",
+};
+
+const link = (url: string, text: string) =>
+  `\x1b]8;;${url}\x07${C.underline}${text}\x1b]8;;\x07${C.reset}`;
+
+export const SELF_INTRO = `
+  ${C.lightGray}${C.bold}____ _____ _____        ${C.reset}${C.gray}${C.bold}__    __           _${C.reset}
+ ${C.lightGray}${C.bold}|___ |___  |___ /__/\\__ ${C.reset}${C.gray}${C.bold}/ / /\\ \\ \\___  _ __| | _____${C.reset}
+   ${C.lightGray}${C.bold}__) | / /  |_ \\     / ${C.reset}${C.gray}${C.bold}\\ \\/  \\/ / _ \\| '__| |/ / __|${C.reset}
+  ${C.lightGray}${C.bold}/ __/ / /  ___) /_  _\\ ${C.reset}${C.gray}${C.bold} \\  /\\  | (_) | |  |   <\\__ \\${C.reset}
+ ${C.lightGray}${C.bold}|_____/_/  |____/  \\/     ${C.reset}${C.gray}${C.bold}\\/  \\/ \\___/|_|  |_|\\_|___/${C.reset}
+
+
+${C.bgWhite}${C.black}273* (tuna-sand)${C.reset}
+Hello! I'm a developer who loves ${C.bold}Experimental Creative${C.reset}.
+
+${C.bgWhite}${C.black}Role${C.reset}${C.gray} : Develop, Graphic Design, Sensor Analysis, Piano${C.reset}
+${C.bgWhite}${C.black}Portfolio${C.reset}${C.gray} : ${link(import.meta.env.URL || import.meta.env.LOCAL_URL, import.meta.env.URL || import.meta.env.LOCAL_URL)}${C.reset}
+
+${C.bgWhite}${C.black}GitHub${C.reset}${C.gray} : ${link(GITHUB_LINK, "273Do")}${C.reset}
+${C.bgWhite}${C.black}Discord${C.reset}${C.gray} : ${link(DISCORD_LINK, "273")}${C.reset}
+${C.bgWhite}${C.black}X(Twitter)${C.reset}${C.gray} : ${link(X_LINK, "@273Do")}${C.reset}
+${C.bgWhite}${C.black}Note${C.reset}${C.gray} : ${link(NOTE_LINK, "273*")}${C.reset}
+${C.bgWhite}${C.black}Qiita${C.reset}${C.gray} : ${link(QIITA_LINK, "@273Do")}${C.reset}
+${C.bgWhite}${C.black}YouTube${C.reset}${C.gray} : ${link(YOUTUBE_LINK, "imperiRwrath")}${C.reset}
+`;
