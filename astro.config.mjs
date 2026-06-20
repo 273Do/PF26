@@ -10,7 +10,7 @@ import netlify from "@astrojs/netlify";
 // https://astro.build/config
 export default defineConfig({
   site: process.env.URL || process.env.LOCAL_URL,
-  adapter: netlify({ imageCDN: false }),
+  adapter: netlify({ cacheOnDemandPages: true, imageCDN: false }),
   integrations: [mdx(), sitemap(), react()],
 
   vite: {
