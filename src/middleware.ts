@@ -9,7 +9,10 @@ export const onRequest = defineMiddleware(({ request, url }, next) => {
   if (url.pathname === "/" && isCurl) {
     return new Response(SELF_INTRO, {
       status: 200,
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-store",
+      },
     });
   }
 
