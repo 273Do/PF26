@@ -14,8 +14,11 @@ const pathname = Astro.url.pathname
 
 const isMixBlend = pathname === "" || "contact";
 
-const { count: worksCount } = await fetchWorks();
-const { count: sandboxesCount } = await fetchSandboxes();
+const isHome = pathname === "";
+const { count: worksCount } = isHome ? { count: 0 } : await fetchWorks();
+const { count: sandboxesCount } = isHome
+  ? { count: 0 }
+  : await fetchSandboxes();
 ---
 
 <header
